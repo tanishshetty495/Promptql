@@ -1,7 +1,946 @@
-<div class="mb-3">
-                            <label for="conn-host" class="form-label">Host:</label>
-                            <input type="text" class="form-control" id="conn-host" placeholder="e.g., localhost, aws-endpoint.rds.amazonaws.com, or *.neon.tech" required>
-                            <div id="host-help" class="form-text fst-italic small d-none">
-                                Neon hosts automatically use SSL mode for secure connections
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptQL - Schema-Aware Text-to-SQL Engine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 20px 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 15px 15px 0 0 !important;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(to right, #5a67d8, #6b46c1);
+            transform: translateY(-2px);
+        }
+        .sql-editor {
+            font-family: 'Courier New', monospace;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1rem;
+            min-height: 100px;
+        }
+        .results-table {
+            margin-top: 1rem;
+        }
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-connected {
+            background-color: #28a745;
+        }
+        .status-disconnected {
+            background-color: #dc3545;
+        }
+        .status-processing {
+            background-color: #ffc107;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .connection-item {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+        .connection-name {
+            font-weight: 600;
+            color: #495057;
+        }
+        .connection-details {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .tab-content {
+            border-top: 1px solid #dee2e6;
+            padding-top: 1rem;
+        }
+        .nav-tabs .nav-link {
+            border-radius: 10px 10px 0 0;
+            margin-right: 0.2rem;
+            font-weight: 500;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+        }
+        .query-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .example-query {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .example-query:hover {
+            background-color: #f8f9fa;
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+            margin-top: 3rem;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-database me-3"></i>PromptQL</h1>
+                    <p class="lead mb-0">Schema-Aware Text-to-SQL Engine</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div id="backend-status" class="status-indicator">
+                        <span class="status-dot status-disconnected"></span>
+                        <span id="backend-status-text">Checking backend...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container">
+            <!-- Connection Management -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-plug me-2"></i>Database Connections
+                        </div>
+                        <div class="card-body">
+                            <button id="add-connection-btn" class="btn btn-primary w-100 mb-3">
+                                <i class="fas fa-plus me-2"></i>Add New Connection
+                            </button>
+                            <div id="connections-list">
+                                <!-- Connections will be populated here -->
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Query Interface -->
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-question me-2"></i>Ask Your Question
+                        </div>
+                        <div class="card-body">
+                            <form id="query-form">
+                                <div class="mb-3">
+                                    <label for="question-input" class="form-label">Ask a question about your data:</label>
+                                    <textarea id="question-input" class="form-control query-input" rows="3" placeholder="e.g., Show me the top 10 customers by total purchase amount"></textarea>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" id="submit-query-btn" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-play me-2"></i>Generate & Execute SQL
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Example queries -->
+                            <div class="mt-4">
+                                <h6><i class="fas fa-lightbulb me-2"></i>Example Questions:</h6>
+                                <div id="example-queries">
+                                    <!-- Examples will be populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-chart-bar me-2"></i>Query Results</span>
+                            <div>
+                                <button id="copy-sql-btn" class="btn btn-outline-secondary btn-sm me-2">
+                                    <i class="fas fa-copy"></i> Copy SQL
+                                </button>
+                                <button id="download-results-btn" class="btn btn-outline-secondary btn-sm">
+                                    <i class="fas fa-download"></i> Download CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="results-container">
+                                <!-- SQL Display -->
+                                <div class="mb-4">
+                                    <h6><i class="fas fa-code me-2"></i>Generated SQL:</h6>
+                                    <div id="sql-display" class="sql-editor" readonly></div>
+                                </div>
+
+                                <!-- Results Display -->
+                                <div id="results-display">
+                                    <!-- Results will be shown here -->
+                                </div>
+
+                                <!-- Metadata -->
+                                <div id="metadata-display" class="mt-4 pt-3 border-top">
+                                    <h6><i class="fas fa-info-circle me-2"></i>Query Information:</h6>
+                                    <div id="metadata-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>PromptQL v0.1.0 | Built with ❤️ for data exploration</p>
+            <p><small>Backend API: <span id="api-url">http://localhost:8000</span></small></p>
+        </div>
+    </div>
+
+    <!-- Modal for Add Connection -->
+    <div class="modal fade" id="connectionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-database me-2"></i>Add Database Connection</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="connection-form">
+                        <div class="mb-3">
+                            <label for="conn-name" class="form-label">Connection Name:</label>
+                            <input type="text" class="form-control" id="conn-name" placeholder="e.g., Production Sales DB">
+                        </div>
+                        <div class="mb-3">
+                            <label for="conn-host" class="form-label">Host:</label>
+                            <input type="text" class="form-control" id="conn-host" placeholder="e.g., localhost or aws-endpoint.rds.amazonaws.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="conn-port" class="form-label">Port:</label>
+                            <input type="number" class="form-control" id="conn-port" value="5432" min="1" max="65535" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="conn-database" class="form-label">Database Name:</label>
+                            <input type="text" class="form-control" id="conn-database" placeholder="e.g., sales_db" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="conn-username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="conn-username" placeholder="e.g., db_user" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="conn-password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="conn-password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="save-credentials">
+                            <label class="form-check-label" for="save-credentials">
+                                Save credentials locally (for demo only - not secure)
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="connection-form" class="btn btn-primary">
+                        <i class="fas fa-plug me-2"></i>Test & Save Connection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script>
+        // Frontend JavaScript for PromptQL
+        class PromptQLFrontend {
+            constructor() {
+                this.backendUrl = 'http://localhost:8000'; // Default backend URL
+
+                // IMPORTANT: replace the string below with the exact SECRET_KEY
+                // value from your backend's .env file. This must match exactly
+                // or every request will fail with 401 Unauthorized.
+                this.secretKey = '2d821631c984e73ef264a6e92125df0dbdc1530efa31e7e6bd4ded3553a61b7e';
+
+                // Authenticated axios instance - use this.api instead of axios
+                // for every call to the backend so the Authorization header
+                // is always included automatically.
+                this.api = axios.create({
+                    baseURL: this.backendUrl,
+                    headers: {
+                        'Authorization': `Bearer ${this.secretKey}`
+                    }
+                });
+
+                this.currentConnectionId = null;
+                this.connections = [];
+                this.sql = '';
+                this.results = [];
+                this.metadata = {};
+
+                // Initialize the application
+                this.init();
+            }
+
+            init() {
+                // Check backend status
+                this.checkBackendStatus();
+
+                // Load saved connections (if any)
+                this.loadConnections();
+
+                // Set up event listeners
+                this.setupEventListeners();
+
+                // Load example queries
+                this.loadExampleQueries();
+            }
+
+            checkBackendStatus() {
+                this.api.get('/health')
+                    .then(response => {
+                        this.updateBackendStatus(true, response.data);
+                    })
+                    .catch(error => {
+                        this.updateBackendStatus(false, null);
+                        console.error('Backend connection failed:', error);
+                    });
+            }
+
+            updateBackendStatus(isConnected, data) {
+                const statusDot = document.querySelector('#backend-status .status-dot');
+                const statusText = document.getElementById('backend-status-text');
+
+                if (isConnected) {
+                    statusDot.classList.remove('status-disconnected');
+                    statusDot.classList.add('status-connected');
+                    statusText.textContent = 'Backend connected';
+                } else {
+                    statusDot.classList.remove('status-connected');
+                    statusDot.classList.add('status-disconnected');
+                    statusText.textContent = 'Backend disconnected';
+                }
+            }
+
+            setupEventListeners() {
+                // Connection form submission
+                const connectionForm = document.getElementById('connection-form');
+                if (connectionForm) {
+                    connectionForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.addConnection();
+                    });
+                }
+
+                // Query form submission
+                const queryForm = document.getElementById('query-form');
+                if (queryForm) {
+                    queryForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.executeQuery();
+                    });
+                }
+
+                // Copy SQL button
+                const copySqlBtn = document.getElementById('copy-sql-btn');
+                if (copySqlBtn) {
+                    copySqlBtn.addEventListener('click', () => this.copySql());
+                }
+
+                // Download results button
+                const downloadResultsBtn = document.getElementById('download-results-btn');
+                if (downloadResultsBtn) {
+                    downloadResultsBtn.addEventListener('click', () => this.downloadResults());
+                }
+
+                // Add connection button
+                const addConnectionBtn = document.getElementById('add-connection-btn');
+                if (addConnectionBtn) {
+                    addConnectionBtn.addEventListener('click', () => {
+                        // Reset form
+                        document.getElementById('connection-form').reset();
+                        document.getElementById('conn-port').value = '5432';
+                        // Show modal
+                        const modal = new bootstrap.Modal(document.getElementById('connectionModal'));
+                        modal.show();
+                    });
+                }
+            }
+
+            loadExampleQueries() {
+                const exampleQueriesContainer = document.getElementById('example-queries');
+                if (!exampleQueriesContainer) return;
+
+                // These would ideally come from the backend or be configurable
+                const examples = [
+                    "Show me all tables in the database",
+                    "What are the top 5 most expensive products?",
+                    "Count the number of customers by city",
+                    "Show sales trends over the last 6 months",
+                    "Which products have never been sold?",
+                    "Show me the average order value by month"
+                ];
+
+                exampleQueriesContainer.innerHTML = '';
+                examples.forEach(example => {
+                    const exampleDiv = document.createElement('div');
+                    exampleDiv.className = 'example-query mb-2 p-2 border rounded';
+                    exampleDiv.textContent = example;
+                    exampleDiv.addEventListener('click', () => {
+                        document.getElementById('question-input').value = example;
+                        // Focus on the textarea
+                        document.getElementById('question-input').focus();
+                    });
+                    exampleQueriesContainer.appendChild(exampleDiv);
+                });
+            }
+
+            loadConnections() {
+                // In a real app, you might load from localStorage or backend
+                // For demo, we'll start with empty connections
+                this.connections = JSON.parse(localStorage.getItem('promptqlConnections') || '[]');
+                this.renderConnections();
+            }
+
+            saveConnections() {
+                localStorage.setItem('promptqlConnections', JSON.stringify(this.connections));
+            }
+
+            addConnection() {
+                // Get form values
+                const connectionData = {
+                    name: document.getElementById('conn-name').value.trim(),
+                    host: document.getElementById('conn-host').value.trim(),
+                    port: parseInt(document.getElementById('conn-port').value),
+                    database: document.getElementById('conn-database').value.trim(),
+                    username: document.getElementById('conn-username').value.trim(),
+                    password: document.getElementById('conn-password').value,
+                    saveCredentials: document.getElementById('save-credentials').checked
+                };
+
+                // Validate
+                if (!connectionData.name || !connectionData.host || !connectionData.database ||
+                    !connectionData.username || !connectionData.password) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                // Show loading state in modal
+                const submitBtn = document.querySelector('#connectionModal .btn-primary');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Testing connection...';
+                submitBtn.disabled = true;
+
+                // Prepare credentials for backend
+                const credentials = {
+                    host: connectionData.host,
+                    port: connectionData.port,
+                    database: connectionData.database,
+                    username: connectionData.username,
+                    password: connectionData.password
+                };
+
+                // Test connection with backend
+                this.api.post('/connections', {
+                    host: connectionData.host,
+                    port: connectionData.port,
+                    database: connectionData.database,
+                    username: connectionData.username,
+                    password: connectionData.password,
+                    connection_name: connectionData.name
+                })
+                .then(response => {
+                    // Connection successful
+                    const connection = {
+                        id: response.data.connection_id,
+                        name: connectionData.name,
+                        host: connectionData.host,
+                        port: connectionData.port,
+                        database: connectionData.database,
+                        username: connectionData.username,
+                        // Don't save password in frontend - only connection ID
+                        createdAt: new Date().toISOString()
+                    };
+
+                    // Add to connections list
+                    this.connections.push(connection);
+                    this.saveConnections();
+                    this.renderConnections();
+
+                    // Select this connection
+                    this.selectConnection(connection.id);
+
+                    // Close modal and show success
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('connectionModal'));
+                    modal.hide();
+
+                    // Reset form
+                    document.getElementById('connection-form').reset();
+                    document.getElementById('conn-port').value = '5432';
+
+                    // Show success message
+                    this.showToast(`Connection "${connectionData.name}" added successfully!`, 'success');
+                })
+                .catch(error => {
+                    let errorMessage = 'Failed to connect to database';
+                    if (error.response) {
+                        errorMessage = error.response.data.detail || error.response.data.message || errorMessage;
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    alert(`Connection failed: ${errorMessage}`);
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+            }
+
+            renderConnections() {
+                const connectionsList = document.getElementById('connections-list');
+                if (!connectionsList) return;
+
+                if (this.connections.length === 0) {
+                    connectionsList.innerHTML = `
+                        <div class="text-center py-4">
+                            <i class="fas fa-database fa-2x mb-3 text-muted"></i>
+                            <p class="mb-0">No connections configured. Add your first connection above.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                connectionsList.innerHTML = '';
+                this.connections.forEach(conn => {
+                    const connDiv = document.createElement('div');
+                    connDiv.className = 'connection-item p-3 border rounded mb-2';
+                    connDiv.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="connection-name">${conn.name}</div>
+                                <div class="connection-details">
+                                    <small>${conn.host}:${conn.port}/${conn.database}</small><br>
+                                    <small>User: ${conn.username}</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                ${this.currentConnectionId === conn.id ?
+                                    '<button class="btn btn-sm btn-outline-primary" id="use-connection-btn">Using</button>' :
+                                    `<button class="btn btn-sm btn-outline-secondary me-1" onclick="frontend.selectConnection('${conn.id}')">Use</button>`}
+                                <button class="btn btn-sm btn-outline-danger" onclick="frontend.removeConnection('${conn.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    connectionsList.appendChild(connDiv);
+                });
+            }
+
+            selectConnection(connectionId) {
+                this.currentConnectionId = connectionId;
+                this.renderConnections();
+
+                // Update UI to show selected connection
+                const conn = this.connections.find(c => c.id === connectionId);
+                if (conn) {
+                    this.showToast(`Selected connection: ${conn.name}`, 'info');
+                }
+            }
+
+            removeConnection(connectionId) {
+                if (!confirm('Are you sure you want to remove this connection?')) {
+                    return;
+                }
+
+                this.connections = this.connections.filter(conn => conn.id !== connectionId);
+                this.saveConnections();
+                this.renderConnections();
+
+                // If we removed the currently selected connection, clear selection
+                if (this.currentConnectionId === connectionId) {
+                    this.currentConnectionId = null;
+                }
+
+                this.showToast('Connection removed', 'info');
+            }
+
+            executeQuery() {
+                const question = document.getElementById('question-input').value.trim();
+
+                if (!question) {
+                    alert('Please enter a question');
+                    return;
+                }
+
+                if (!this.currentConnectionId) {
+                    alert('Please select a database connection first');
+                    return;
+                }
+
+                // Show loading state
+                this.showLoading(true);
+
+                // Execute query via backend
+                this.api.post('/query', {
+                    connection_id: this.currentConnectionId,
+                    question: question
+                })
+                .then(response => {
+                    // Handle successful response
+                    this.sql = response.data.sql;
+                    this.results = response.data.results;
+                    this.metadata = response.data.metadata;
+
+                    // Update UI
+                    this.displaySql();
+                    this.displayResults();
+                    this.displayMetadata();
+
+                    // Show success message
+                    const rowCount = response.data.row_count || this.results.length;
+                    this.showToast(`Query executed successfully! ${rowCount} rows returned.`, 'success');
+                })
+                .catch(error => {
+                    let errorMessage = 'An error occurred while processing your query';
+                    if (error.response) {
+                        if (error.response.data && error.response.data.detail) {
+                            errorMessage = error.response.data.detail;
+                        } else if (error.response.data && error.response.data.message) {
+                            errorMessage = error.response.data.message;
+                        } else {
+                            errorMessage = `Backend error: ${error.response.status} ${error.response.statusText}`;
+                        }
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+
+                    this.showToast(`Error: ${errorMessage}`, 'error');
+                    console.error('Query execution failed:', error);
+                })
+                .finally(() => {
+                    this.showLoading(false);
+                });
+            }
+
+            displaySql() {
+                const sqlDisplay = document.getElementById('sql-display');
+                if (sqlDisplay) {
+                    sqlDisplay.textContent = this.sql;
+                }
+            }
+
+            displayResults() {
+                const resultsDisplay = document.getElementById('results-display');
+                if (!resultsDisplay) return;
+
+                if (this.results.length === 0) {
+                    resultsDisplay.innerHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-table"></i>
+                            <p>No results returned</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Create table
+                const table = document.createElement('table');
+                table.className = 'table table-hover table-striped results-table';
+
+                // Create header
+                const thead = document.createElement('thead');
+                thead.innerHTML = '<tr></tr>';
+                const headerRow = thead.querySelector('tr');
+
+                // Get column names from first row
+                if (this.results.length > 0) {
+                    Object.keys(this.results[0]).forEach(key => {
+                        const th = document.createElement('th');
+                        th.scope = 'col';
+                        th.textContent = key.replace('_', ' ').toUpperCase();
+                        headerRow.appendChild(th);
+                    });
+                }
+                table.appendChild(thead);
+
+                // Create body
+                const tbody = document.createElement('tbody');
+                this.results.forEach(row => {
+                    const tr = document.createElement('tr');
+                    Object.values(row).forEach(value => {
+                        const td = document.createElement('td');
+                        td.textContent = value !== null && value !== undefined ? value : '';
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+
+                resultsDisplay.innerHTML = '';
+                resultsDisplay.appendChild(table);
+            }
+
+            displayMetadata() {
+                const metadataContent = document.getElementById('metadata-content');
+                if (!metadataContent) return;
+
+                if (Object.keys(this.metadata).length === 0) {
+                    metadataContent.innerHTML = '<p class="text-muted">No metadata available</p>';
+                    return;
+                }
+
+                let html = '<div class="row">';
+
+                // Execution time
+                if (this.metadata.execution_time_ms !== undefined) {
+                    html += `
+                        <div class="col-md-3">
+                            <div class="bg-light p-3 rounded">
+                                <h6 class="mb-1">Execution Time</h6>
+                                <p class="mb-0 fs-5">${this.metadata.execution_time_ms} ms</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Row count
+                if (this.metadata.rows_returned !== undefined) {
+                    html += `
+                        <div class="col-md-3">
+                            <div class="bg-light p-3 rounded">
+                                <h6 class="mb-1">Rows Returned</h6>
+                                <p class="mb-0 fs-5">${this.metadata.rows_returned}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Attempts
+                if (this.metadata.generation_attempts !== undefined || this.metadata.execution_attempts !== undefined) {
+                    html += `
+                        <div class="col-md-3">
+                            <div class="bg-light p-3 rounded">
+                                <h6 class="mb-1">Attempts</h6>
+                                <p class="mb-0 fs-5">
+                                    ${this.metadata.generation_attempts || 0} gen,
+                                    ${this.metadata.execution_attempts || 0} exec
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Connection ID
+                if (this.metadata.connection_id) {
+                    html += `
+                        <div class="col-md-3">
+                            <div class="bg-light p-3 rounded">
+                                <h6 class="mb-1">Connection ID</h6>
+                                <p class="mb-0 fs-6 text-truncate" title="${this.metadata.connection_id}">
+                                    ${this.metadata.connection_id.substring(0, 8)}...
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += '</div>';
+                metadataContent.innerHTML = html;
+            }
+
+            copySql() {
+                if (!this.sql) {
+                    this.showToast('No SQL to copy', 'warning');
+                    return;
+                }
+
+                navigator.clipboard.writeText(this.sql).then(() => {
+                    this.showToast('SQL copied to clipboard!', 'success');
+                }).catch(err => {
+                    this.showToast('Failed to copy SQL', 'error');
+                    console.error('Clipboard write failed:', err);
+                });
+            }
+
+            downloadResults() {
+                if (this.results.length === 0) {
+                    this.showToast('No results to download', 'warning');
+                    return;
+                }
+
+                // Convert results to CSV
+                const headers = Object.keys(this.results[0]);
+                const csvRows = [];
+
+                // Add header row
+                csvRows.push(headers.join(','));
+
+                // Add data rows
+                this.results.forEach(row => {
+                    const values = headers.map(header => {
+                        const value = row[header];
+                        // Escape quotes and wrap in quotes if needed
+                        const stringValue = value === null || value === undefined ? '' : String(value);
+                        const escaped = stringValue.includes('"') ? stringValue.replace(/"/g, '""') : stringValue;
+                        return `"${escaped}"`;
+                    });
+                    csvRows.push(values.join(','));
+                });
+
+                const csvContent = csvRows.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+
+                // Create download link
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', `query_results_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            showLoading(isLoading) {
+                const submitBtn = document.getElementById('submit-query-btn');
+                const questionInput = document.getElementById('question-input');
+
+                if (isLoading) {
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+                    submitBtn.disabled = true;
+                    questionInput.disabled = true;
+                } else {
+                    submitBtn.innerHTML = '<i class="fas fa-play me-2"></i>Generate & Execute SQL';
+                    submitBtn.disabled = false;
+                    questionInput.disabled = false;
+                }
+            }
+
+            showToast(message, type = 'info') {
+                // Remove any existing toast
+                const existingToast = document.querySelector('.toast');
+                if (existingToast) {
+                    existingToast.remove();
+                }
+
+                // Create toast container if it doesn't exist
+                let toastContainer = document.querySelector('.toast-container');
+                if (!toastContainer) {
+                    toastContainer = document.createElement('div');
+                    toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+                    document.body.appendChild(toastContainer);
+                }
+
+                // Create toast element
+                const toastEl = document.createElement('div');
+                toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+                toastEl.setAttribute('role', 'alert');
+                toastEl.setAttribute('aria-live', 'assertive');
+                toastEl.setAttribute('aria-atomic', 'true');
+                toastEl.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                `;
+
+                toastContainer.appendChild(toastEl);
+
+                // Initialize and show toast
+                const toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                toast.show();
+
+                // Remove toast from DOM after it's hidden
+                toastEl.addEventListener('hidden.bs.toast', () => {
+                    toastEl.remove();
+                });
+            }
+        }
+
+        // Initialize the frontend when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.frontend = new PromptQLFrontend();
+        });
+    </script>
+</body>
+</html>
