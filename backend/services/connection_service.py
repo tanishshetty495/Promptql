@@ -26,7 +26,8 @@ class ConnectionService:
 
     def __init__(self):
         self._connection_pool: Optional[asyncpg.Pool] = None
-        self._encryption_key: bytes = self._derive_encryption_key(settings.ENCRYPTION_KEY)
+        self._encryption_key: bytes = self._derive_encryption_key(
+            settings.ENCRYPTION_KEY)
         self._cipher = Fernet(self._encryption_key)
 
     def _derive_encryption_key(self, key: str) -> bytes:
@@ -53,23 +54,17 @@ class ConnectionService:
             PostgreSQL DSN string
         """
         host = credentials.get('host', '')
+        user = credentials.get('username', '')
+        password = quote_plus(credentials.get('password', ''))
+        port = credentials.get('port', 5432)
+        dbname = credentials.get('database', '')
 
-        # Base connection parameters
-        params = {
-            'user': credentials.get('user'),
-            'password': quote_plus(credentials.get('password', '')),
-            'host': host,
-            'port': str(credentials.get('port', 5432)),
-            'dbname': credentials.get('database')
-        }
+        dsn = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
 
-        # Add SSL mode for Neon hosts
         if host.endswith('.neon.tech'):
-            params['sslmode'] = 'require'
+            dsn += "?sslmode=require"
 
-        # Construct DSN
-        query_string = urlencode(params)
-        return f"postgresql://{query_string}"
+        return dsn
 
     def encrypt_credentials(self, credentials: dict) -> str:
         """
@@ -83,11 +78,13 @@ class ConnectionService:
         """
         try:
             credentials_json = json.dumps(credentials)
-            encrypted_data = self._cipher.encrypt(credentials_json.encode('utf-8'))
+            encrypted_data = self._cipher.encrypt(
+                credentials_json.encode('utf-8'))
             return encrypted_data.decode('utf-8')
         except Exception as e:
             app_logger.error(f"Failed to encrypt credentials: {e}")
-            raise CredentialEncryptionError("Failed to encrypt credentials") from e
+            raise CredentialEncryptionError(
+                "Failed to encrypt credentials") from e
 
     def decrypt_credentials(self, encrypted_credentials: str) -> dict:
         """
@@ -100,12 +97,14 @@ class ConnectionService:
             Decrypted credentials dictionary
         """
         try:
-            decrypted_data = self._cipher.decrypt(encrypted_credentials.encode('utf-8'))
+            decrypted_data = self._cipher.decrypt(
+                encrypted_credentials.encode('utf-8'))
             credentials_json = decrypted_data.decode('utf-8')
             return json.loads(credentials_json)
         except Exception as e:
             app_logger.error(f"Failed to decrypt credentials: {e}")
-            raise CredentialEncryptionError("Failed to decrypt credentials") from e
+            raise CredentialEncryptionError(
+                "Failed to decrypt credentials") from e
 
     async def initialize_pool(self, credentials: dict) -> None:
         """
@@ -129,11 +128,13 @@ class ConnectionService:
                 init=self._init_connection,
             )
 
-            app_logger.info("Database connection pool initialized successfully")
+            app_logger.info(
+                "Database connection pool initialized successfully")
 
         except Exception as e:
             app_logger.error(f"Failed to initialize connection pool: {e}")
-            raise DatabaseConnectionError("Failed to initialize connection pool") from e
+            raise DatabaseConnectionError(
+                "Failed to initialize connection pool") from e
 
     async def _setup_connection(self, connection):
         """Setup connection with required parameters."""
@@ -162,7 +163,8 @@ class ConnectionService:
             yield connection
         except Exception as e:
             app_logger.error(f"Error getting database connection: {e}")
-            raise DatabaseConnectionError("Failed to get database connection") from e
+            raise DatabaseConnectionError(
+                "Failed to get database connection") from e
         finally:
             if connection:
                 await self._connection_pool.release(connection)

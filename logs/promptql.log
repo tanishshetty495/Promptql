@@ -642,3 +642,1187 @@ TypeError: ExecutionService.__init__() missing 1 required positional argument: '
 2026-09-17 14:58:46 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
 2026-09-17 14:58:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
 2026-09-17 14:58:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:05:29 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:05:29 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:05:29 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:05:29 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:05:29 | INFO     | backend.app.main:lifespan:70 - Shutting down PromptQL backend application
+2026-09-17 15:05:29 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:05:29 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:05:29 | INFO     | uvicorn.server:_serve:101 - Finished server process [23240]
+2026-09-17 15:05:29 | INFO     | uvicorn.server:_serve:101 - Finished server process [23240]
+2026-09-17 15:05:52 | INFO     | uvicorn.server:_serve:91 - Started server process [24588]
+2026-09-17 15:05:52 | INFO     | uvicorn.server:_serve:91 - Started server process [24588]
+2026-09-17 15:05:52 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:05:52 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:05:52 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 15:05:53 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:05:53 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:05:53 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:05:55 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 62, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:05:55 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 62, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:05:55 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:05:55 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:05:56 | INFO     | uvicorn.server:_serve:91 - Started server process [21720]
+2026-09-17 15:05:56 | INFO     | uvicorn.server:_serve:91 - Started server process [21720]
+2026-09-17 15:05:56 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:05:56 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:05:56 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 15:05:56 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:05:57 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:05:57 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:06:01 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:06:02 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:06:06 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 15:06:06 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:06:06 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:12:00 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:12:00 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:12:01 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:12:01 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:12:01 | INFO     | backend.app.main:lifespan:70 - Shutting down PromptQL backend application
+2026-09-17 15:12:01 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:12:01 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:12:01 | INFO     | uvicorn.server:_serve:101 - Finished server process [21720]
+2026-09-17 15:12:01 | INFO     | uvicorn.server:_serve:101 - Finished server process [21720]
+2026-09-17 15:12:22 | INFO     | uvicorn.server:_serve:91 - Started server process [8876]
+2026-09-17 15:12:22 | INFO     | uvicorn.server:_serve:91 - Started server process [8876]
+2026-09-17 15:12:22 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:12:22 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:12:22 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 15:12:22 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:12:22 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:12:23 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:12:27 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:12:28 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:12:32 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 15:12:32 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:12:32 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:15:01 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:15:01 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:15:01 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:15:01 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:15:01 | INFO     | backend.app.main:lifespan:70 - Shutting down PromptQL backend application
+2026-09-17 15:15:01 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:15:01 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:15:01 | INFO     | uvicorn.server:_serve:101 - Finished server process [8876]
+2026-09-17 15:15:01 | INFO     | uvicorn.server:_serve:101 - Finished server process [8876]
+2026-09-17 15:15:17 | INFO     | uvicorn.server:_serve:91 - Started server process [8740]
+2026-09-17 15:15:17 | INFO     | uvicorn.server:_serve:91 - Started server process [8740]
+2026-09-17 15:15:17 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:15:17 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:15:17 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:15:17 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:15:18 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:15:18 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:15:19 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:15:19 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:15:19 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:15:19 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:22:11 | INFO     | uvicorn.server:_serve:91 - Started server process [8736]
+2026-09-17 15:22:11 | INFO     | uvicorn.server:_serve:91 - Started server process [8736]
+2026-09-17 15:22:11 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:22:11 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:22:11 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:22:11 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:22:12 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:22:12 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:22:16 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:22:17 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:22:22 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 15:22:22 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:22:22 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:22:38 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:22:38 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:22:38 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:22:38 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:22:38 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 15:22:38 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:22:38 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:22:38 | INFO     | uvicorn.server:_serve:101 - Finished server process [8736]
+2026-09-17 15:22:38 | INFO     | uvicorn.server:_serve:101 - Finished server process [8736]
+2026-09-17 15:23:06 | INFO     | uvicorn.server:_serve:91 - Started server process [21672]
+2026-09-17 15:23:06 | INFO     | uvicorn.server:_serve:91 - Started server process [21672]
+2026-09-17 15:23:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:23:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:23:06 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:23:06 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:23:07 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:23:07 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:23:11 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:23:12 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:23:16 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 15:23:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:23:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:27:22 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:27:22 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:27:22 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:27:22 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:27:22 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 15:27:22 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:27:22 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:27:22 | INFO     | uvicorn.server:_serve:101 - Finished server process [21672]
+2026-09-17 15:27:22 | INFO     | uvicorn.server:_serve:101 - Finished server process [21672]
+2026-09-17 15:27:45 | INFO     | uvicorn.server:_serve:91 - Started server process [1560]
+2026-09-17 15:27:45 | INFO     | uvicorn.server:_serve:91 - Started server process [1560]
+2026-09-17 15:27:45 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:27:45 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:27:45 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:27:45 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:27:46 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:27:46 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:27:47 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:27:47 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 15:27:47 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:27:47 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 15:33:38 | INFO     | uvicorn.server:_serve:91 - Started server process [3788]
+2026-09-17 15:33:38 | INFO     | uvicorn.server:_serve:91 - Started server process [3788]
+2026-09-17 15:33:38 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:33:38 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:33:38 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:33:38 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:33:39 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:33:39 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:33:44 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:33:44 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:33:48 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 15:33:48 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:33:48 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:36:43 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:36:43 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:36:43 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:36:43 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:36:43 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 15:36:43 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:36:43 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:36:43 | INFO     | uvicorn.server:_serve:101 - Finished server process [3788]
+2026-09-17 15:36:43 | INFO     | uvicorn.server:_serve:101 - Finished server process [3788]
+2026-09-17 15:37:52 | INFO     | uvicorn.server:_serve:91 - Started server process [6804]
+2026-09-17 15:37:52 | INFO     | uvicorn.server:_serve:91 - Started server process [6804]
+2026-09-17 15:37:52 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:37:52 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:37:52 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:37:52 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:37:53 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:37:53 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:37:57 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:37:58 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:38:02 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 15:38:02 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:38:02 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:43:10 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:43:10 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:43:10 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:43:10 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:43:10 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 15:43:10 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:43:10 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:43:10 | INFO     | uvicorn.server:_serve:101 - Finished server process [6804]
+2026-09-17 15:43:10 | INFO     | uvicorn.server:_serve:101 - Finished server process [6804]
+2026-09-17 15:55:22 | INFO     | uvicorn.server:_serve:91 - Started server process [9504]
+2026-09-17 15:55:22 | INFO     | uvicorn.server:_serve:91 - Started server process [9504]
+2026-09-17 15:55:22 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:55:22 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 15:55:22 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 15:55:22 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:55:22 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 15:55:23 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:55:27 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 15:55:28 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 15:55:32 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 15:55:32 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:55:32 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 15:56:35 | INFO     | backend.app.main:create_connection:135 - Testing connection for 7c069885-7086-4c31-92e7-5735d9e5e620
+2026-09-17 15:56:35 | ERROR    | backend.services.connection_service:test_connection:239 - Connection test failed: 'idna' codec can't encode characters in position 0-68: label too long
+2026-09-17 15:59:52 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:59:52 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 15:59:52 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:59:52 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 15:59:52 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 15:59:52 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:59:52 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 15:59:52 | INFO     | uvicorn.server:_serve:101 - Finished server process [9504]
+2026-09-17 15:59:52 | INFO     | uvicorn.server:_serve:101 - Finished server process [9504]
+2026-09-17 16:00:14 | INFO     | uvicorn.server:_serve:91 - Started server process [6476]
+2026-09-17 16:00:14 | INFO     | uvicorn.server:_serve:91 - Started server process [6476]
+2026-09-17 16:00:14 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:00:14 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:00:14 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 16:00:14 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 16:00:14 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 16:00:15 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 16:00:16 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 16:00:16 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 63, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 16:00:16 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 16:00:16 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 16:08:44 | INFO     | uvicorn.server:_serve:91 - Started server process [18992]
+2026-09-17 16:08:44 | INFO     | uvicorn.server:_serve:91 - Started server process [18992]
+2026-09-17 16:08:44 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:08:44 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:08:44 | INFO     | backend.app.main:lifespan:61 - Starting PromptQL backend application
+2026-09-17 16:08:44 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 16:08:45 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 16:08:45 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 16:08:49 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 16:08:50 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 16:08:54 | INFO     | backend.app.main:lifespan:68 - Embedding model and services initialized
+2026-09-17 16:08:54 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 16:08:54 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 16:09:35 | INFO     | backend.app.main:create_connection:135 - Testing connection for 2bb0dd3e-75f0-4072-9887-9254bd53c5a1
+2026-09-17 16:09:38 | INFO     | backend.app.main:create_connection:150 - Connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1 (production) validated and ready for storage
+2026-09-17 16:09:44 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:09:44 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:09:51 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:09:51 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:10:00 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:10:00 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:10:25 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:10:25 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:10:43 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:10:43 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:11:56 | ERROR    | backend.services.retrieval_service:hybrid_retrieval:202 - Hybrid retrieval failed: Retrieval index not initialized
+2026-09-17 16:11:56 | ERROR    | backend.app.main:execute_query:183 - Failed to retrieve schema for connection 2bb0dd3e-75f0-4072-9887-9254bd53c5a1: Hybrid retrieval failed
+2026-09-17 16:18:12 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 16:18:12 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 16:18:12 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 16:18:12 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 16:18:12 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 16:18:12 | INFO     | backend.app.main:lifespan:71 - Shutting down PromptQL backend application
+2026-09-17 16:18:12 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 16:18:12 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 16:18:12 | INFO     | uvicorn.server:_serve:101 - Finished server process [18992]
+2026-09-17 16:18:12 | INFO     | uvicorn.server:_serve:101 - Finished server process [18992]
+2026-09-17 16:18:14 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 16:18:14 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 16:18:38 | INFO     | uvicorn.server:_serve:91 - Started server process [24732]
+2026-09-17 16:18:38 | INFO     | uvicorn.server:_serve:91 - Started server process [24732]
+2026-09-17 16:18:38 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:18:38 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 16:18:38 | INFO     | backend.app.main:lifespan:63 - Starting PromptQL backend application
+2026-09-17 16:18:38 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 16:18:39 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 16:18:39 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 16:18:40 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 65, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 16:18:40 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 65, in lifespan
+    schema_service = SchemaService()  # This loads the embedding model
+  File "C:\sql ai agent\backend\services\schema_service.py", line 26, in __init__
+    self.embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\sentence_transformer\model.py", line 194, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        model_name_or_path=model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<13 lines>...
+        default_prompt_name=default_prompt_name,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 236, in __init__
+    modules, self.module_kwargs = self._load_modules(
+                                  ~~~~~~~~~~~~~~~~~~^
+        model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        config_kwargs=config_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1081, in _load_modules
+    return self._load_config_modules(model_name_or_path, **load_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\model.py", line 1298, in _load_config_modules
+    module = module_class.load(
+        model_name_or_path,
+    ...<12 lines>...
+        **extra_load_kwargs,
+    )
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2631, in load
+    return cls(model_name_or_path=model_name_or_path, **init_kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\util\decorators.py", line 92, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 847, in __init__
+    self.model = self._load_model(
+                 ~~~~~~~~~~~~~~~~^
+        model_name_or_path, transformer_task, config, backend, is_peft_model, **model_kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\base\modules\transformer.py", line 2333, in _load_model
+    return model_cls.from_pretrained(model_name_or_path, config=config, **model_kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\models\auto\auto_factory.py", line 405, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4296, in from_pretrained
+    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\modeling_utils.py", line 4426, in _load_pretrained_model
+    loading_info, disk_offload_index = convert_and_load_state_dict_in_model(
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        model=model,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        disk_offload_index=disk_offload_index,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\core_model_loading.py", line 1447, in convert_and_load_state_dict_in_model
+    for first_param_name, mapping in tqdm(param_name_to_load.items(), desc="Loading weights"):
+                                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\logging.py", line 390, in __call__
+    return factory(*args, **kwargs)
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\asyncio.py", line 24, in __init__
+    super().__init__(iterable, *args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 1096, in __init__
+    self.sp = self.status_printer(self.fp)
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\tqdm\std.py", line 448, in status_printer
+    getattr(sys.stderr, 'flush', lambda: None)()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+OSError: [Errno 22] Invalid argument
+
+2026-09-17 16:18:40 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 16:18:40 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.

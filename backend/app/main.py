@@ -9,6 +9,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 
+import uuid
 from backend.core.config import settings
 from backend.core.logger import app_logger
 from backend.services.connection_service import connection_service
@@ -17,6 +18,8 @@ from backend.services.retrieval_service import RetrievalService
 from backend.services.llm_service import LLMService
 from backend.services.validation_service import ValidationService
 from backend.services.execution_service import ExecutionService
+from backend.db.base import AsyncSessionLocal
+from backend.db.models import ConnectionMetadata
 
 
 # Global instances (initialized in lifespan)
@@ -103,14 +106,32 @@ async def create_connection(
     """
     Store a new database connection.
     """
-    connection_id = connection_data.get("connection_id")
-    credentials = connection_data.get("credentials")
+    # Extract flat fields from frontend
+    host = connection_data.get("host")
+    port = connection_data.get("port")
+    database = connection_data.get("database")
+    username = connection_data.get("username")
+    password = connection_data.get("password")
+    connection_name = connection_data.get("connection_name")
 
-    if not connection_id or not credentials:
+    # Validate required fields
+    if not all([host, port, database, username, password]):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="connection_id and credentials are required",
+            detail="host, port, database, username, and password are required",
         )
+
+    # Generate connection ID
+    connection_id = str(uuid.uuid4())
+
+    # Build credentials dict
+    credentials = {
+        "host": host,
+        "port": port,
+        "database": database,
+        "username": username,
+        "password": password
+    }
 
     # Test connection before storing
     app_logger.info(f"Testing connection for {connection_id}")
@@ -122,17 +143,39 @@ async def create_connection(
             detail=detail,
         )
 
-    # Encrypt and store credentials (in a real app, you would save to database)
-    # For now, we just test and return success
+    # Encrypt credentials for storage
     encrypted_credentials = connection_service.encrypt_credentials(credentials)
-    # In a real app, you would save encrypted_credentials to your database
-    # associated with connection_id and the current user (from token)
+
+    # Persist connection metadata to database
+    async with AsyncSessionLocal() as db_session:
+        connection_metadata = ConnectionMetadata(
+            connection_id=connection_id,
+            connection_name=connection_name or f"Connection {connection_id[:8]}",
+            encrypted_credentials=encrypted_credentials
+        )
+        db_session.add(connection_metadata)
+        await db_session.commit()
+
+    # Extract and store schema for the connection
+    try:
+        app_logger.info(f"Extracting schema for connection {connection_id}")
+        schema_info = await schema_service.extract_schema(connection_id, credentials)
+        schema_chunks = await schema_service.get_schema_text_chunks(schema_info)
+        # Set connection_id in chunk metadata
+        for chunk in schema_chunks:
+            chunk['metadata']['connection_id'] = connection_id
+        await schema_service.store_schema_embeddings(connection_id, schema_chunks)
+        app_logger.info(f"Schema extraction and storage completed for connection {connection_id}")
+    except Exception as e:
+        app_logger.error(f"Failed to extract and store schema for connection {connection_id}: {e}")
+        # Don't fail the connection creation if schema extraction fails
+        # The connection is still valid, just without schema search capabilities
 
     app_logger.info(
-        f"Connection {connection_id} validated and ready for storage")
+        f"Connection {connection_id} ({connection_name}) validated and stored")
     return {
         "connection_id": connection_id,
-        "message": "Connection validated successfully",
+        "message": "Connection validated and stored successfully",
     }
 
 
@@ -206,13 +249,33 @@ async def execute_query(
             detail="SQL validation failed",
         )
 
-    # Execute SQL (read-only)
+    # Execute SQL (read-only) - need to get decrypted credentials first
     try:
+        # Look up connection metadata from database
+        async with AsyncSessionLocal() as db_session:
+            result = await db_session.execute(
+                "SELECT encrypted_credentials FROM connection_metadata WHERE connection_id = $1",
+                connection_id
+            )
+            row = result.fetchone()
+            if not row:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail=f"Connection not found: {connection_id}"
+                )
+            encrypted_credentials = row[0]
+
+        # Decrypt credentials
+        credentials = connection_service.decrypt_credentials(encrypted_credentials)
+
+        # Execute query with decrypted credentials
         results = await execution_service.execute_query(
-            connection_id=connection_id,
-            query=sql_query,
-            readonly=True,
+            sql_query,  # SQL query as first parameter
+            connection_id,  # Connection ID as second parameter
+            credentials   # Credentials as third parameter
         )
+    except HTTPException:
+        raise
     except Exception as e:
         app_logger.error(
             f"Failed to execute query for connection {connection_id}: {e}")
