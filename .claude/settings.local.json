@@ -3,7 +3,28 @@
     "allow": [
       "Bash(python *)",
       "Bash(rtk pip *)",
-      "Bash(rtk wc *)"
+      "Bash(rtk wc *)",
+      "Bash(rtk grep *)",
+      "Bash(taskkill /F /IM uvicorn.exe)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :8000)",
+      "Bash(taskkill *)",
+      "Bash(taskkill.exe *)",
+      "Bash(cmd /c \"taskkill /F /PID 15056\")",
+      "Bash(exit *)",
+      "Bash(/c/Windows/System32/taskkill.exe *)",
+      "Bash(powershell -command \"Stop-Process -ID 15056 -Force\")",
+      "Bash(tasklist)",
+      "Bash(findstr 15056)",
+      "Bash(findstr \"15056\")",
+      "Bash(cmd /c \"netstat -ano | findstr :8000\")",
+      "Bash(tasklist *)",
+      "Bash(powershell -command \"Get-Process -ID 15056 | Stop-Process -Force\")",
+      "Bash(powershell -command \"Get-Process -Id \\(Get-NetTCPConnection -LocalPort 8001\\).OwningProcess | Stop-Process -Force\" 2>/dev/null)",
+      "Bash(rtk read *)",
+      "Bash(powershell -command \"Stop-Process -ID 13548 -Force\" 2>/dev/null)",
+      "Bash(powershell -command \"Get-NetTCPConnection -LocalPort 8001\" 2>/dev/null)",
+      "Bash(findstr :8001)"
     ]
   }
 }

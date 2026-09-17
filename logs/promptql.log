@@ -408,3 +408,237 @@ WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind 
 2026-09-16 17:03:04 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
 2026-09-16 17:03:04 | INFO     | uvicorn.server:_serve:101 - Finished server process [1476]
 2026-09-16 17:03:04 | INFO     | uvicorn.server:_serve:101 - Finished server process [1476]
+2026-09-17 14:36:56 | INFO     | uvicorn.server:_serve:91 - Started server process [18296]
+2026-09-17 14:36:56 | INFO     | uvicorn.server:_serve:91 - Started server process [18296]
+2026-09-17 14:36:56 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:36:56 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:36:56 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:36:56 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:36:57 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:36:57 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:37:02 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:37:02 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:37:07 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:37:07 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:37:07 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:37:07 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:37:19 | INFO     | uvicorn.server:_serve:91 - Started server process [3652]
+2026-09-17 14:37:19 | INFO     | uvicorn.server:_serve:91 - Started server process [3652]
+2026-09-17 14:37:19 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:37:19 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:37:19 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:37:20 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:37:20 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:37:20 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:37:25 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:37:25 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:37:29 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:37:29 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:37:29 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:37:29 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:38:00 | INFO     | uvicorn.server:_serve:91 - Started server process [18120]
+2026-09-17 14:38:00 | INFO     | uvicorn.server:_serve:91 - Started server process [18120]
+2026-09-17 14:38:00 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:38:00 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:38:00 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:38:00 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:38:01 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:38:01 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:38:06 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:38:06 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:38:10 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:38:10 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:38:10 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:38:10 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:38:30 | INFO     | uvicorn.server:_serve:91 - Started server process [26100]
+2026-09-17 14:38:30 | INFO     | uvicorn.server:_serve:91 - Started server process [26100]
+2026-09-17 14:38:30 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:38:30 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:38:30 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:38:30 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:38:31 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:38:31 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:38:35 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:38:36 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:38:40 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:38:40 | ERROR    | uvicorn.lifespan.on:send:121 - Traceback (most recent call last):
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\site-packages\starlette\routing.py", line 638, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\TANISH\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\sql ai agent\backend\app\main.py", line 66, in lifespan
+    execution_service = ExecutionService()
+TypeError: ExecutionService.__init__() missing 1 required positional argument: 'validation_service'
+
+2026-09-17 14:38:40 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:38:40 | ERROR    | uvicorn.lifespan.on:startup:59 - Application startup failed. Exiting.
+2026-09-17 14:39:31 | INFO     | uvicorn.server:_serve:91 - Started server process [25092]
+2026-09-17 14:39:31 | INFO     | uvicorn.server:_serve:91 - Started server process [25092]
+2026-09-17 14:39:31 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:39:31 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:39:31 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:39:31 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:39:32 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:39:32 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:39:36 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:39:37 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:39:41 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:39:41 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:39:41 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:39:42 | INFO     | uvicorn.server:_serve:91 - Started server process [17164]
+2026-09-17 14:39:42 | INFO     | uvicorn.server:_serve:91 - Started server process [17164]
+2026-09-17 14:39:42 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:39:42 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:39:42 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:39:42 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:39:42 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:39:42 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:39:47 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:39:47 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:39:52 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:39:52 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-17 14:39:52 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 14:39:52 | INFO     | backend.app.main:lifespan:70 - Shutting down PromptQL backend application
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 14:39:52 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 14:44:23 | INFO     | uvicorn.server:_serve:91 - Started server process [6980]
+2026-09-17 14:44:23 | INFO     | uvicorn.server:_serve:91 - Started server process [6980]
+2026-09-17 14:44:23 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:44:23 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:44:23 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:44:23 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:44:24 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:44:24 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:44:29 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:44:29 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:44:33 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:44:33 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:44:33 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:44:33 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+2026-09-17 14:44:33 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+2026-09-17 14:47:06 | INFO     | uvicorn.server:_serve:91 - Started server process [13548]
+2026-09-17 14:47:06 | INFO     | uvicorn.server:_serve:91 - Started server process [13548]
+2026-09-17 14:47:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:47:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:47:06 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:47:06 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:47:07 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:47:07 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:47:11 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:47:12 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:47:16 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:47:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:47:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:47:16 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+2026-09-17 14:47:16 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+2026-09-17 14:53:04 | INFO     | uvicorn.server:_serve:91 - Started server process [9172]
+2026-09-17 14:53:04 | INFO     | uvicorn.server:_serve:91 - Started server process [9172]
+2026-09-17 14:53:04 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:53:04 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:53:04 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:53:04 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:53:16 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:53:16 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:53:21 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:53:21 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:53:25 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:53:25 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:53:25 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:57:47 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 14:57:47 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-17 14:57:47 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 14:57:47 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-17 14:57:47 | INFO     | backend.app.main:lifespan:70 - Shutting down PromptQL backend application
+2026-09-17 14:57:47 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 14:57:47 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-17 14:57:47 | INFO     | uvicorn.server:_serve:101 - Finished server process [9172]
+2026-09-17 14:57:47 | INFO     | uvicorn.server:_serve:101 - Finished server process [9172]
+2026-09-17 14:58:36 | INFO     | uvicorn.server:_serve:91 - Started server process [23240]
+2026-09-17 14:58:36 | INFO     | uvicorn.server:_serve:91 - Started server process [23240]
+2026-09-17 14:58:36 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:58:36 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-17 14:58:36 | INFO     | backend.app.main:lifespan:60 - Starting PromptQL backend application
+2026-09-17 14:58:36 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:58:37 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-17 14:58:37 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:58:41 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-17 14:58:42 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-17 14:58:46 | INFO     | backend.app.main:lifespan:67 - Embedding model and services initialized
+2026-09-17 14:58:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-17 14:58:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
