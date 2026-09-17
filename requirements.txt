@@ -1,0 +1,47 @@
+# Core Framework
+fastapi
+uvicorn[standard]
+
+# Database & ORM
+SQLAlchemy
+asyncpg
+alembic
+
+# Vector Extension
+pgvector
+
+# Embeddings & NLP
+sentence-transformers
+
+# SQL Validation
+sqlglot
+
+# Graph Processing
+networkx
+rank-bm25
+
+# LLM Integration
+litellm
+
+# Security
+python-dotenv
+passlib[bcrypt]
+pyjwt
+cryptography
+
+# Validation
+pydantic
+pydantic-settings
+
+# Utilities
+python-multipart
+httpx
+
+# Logging & Monitoring
+structlog
+loguru
+
+# Development
+black
+flake8
+isort

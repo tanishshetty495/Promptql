@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(rtk pip *)",
+      "Bash(rtk wc *)"
+    ]
+  }
+}

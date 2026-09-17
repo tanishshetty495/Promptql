@@ -1,0 +1,410 @@
+2026-09-16 15:05:28 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:05:28 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 15:05:28 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:05:53 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:05:53 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:08:51 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:08:52 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 15:08:52 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:08:57 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:08:57 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:09:12 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 15:09:17 | ERROR    | __main__:main:16 - Failed to initialize database: [WinError 1225] The remote computer refused the network connection
+2026-09-16 15:30:49 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:30:50 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 15:30:50 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:30:55 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 15:30:55 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 15:59:50 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 15:59:52 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 15:59:52 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 15:59:53 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 15:59:53 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 15:59:54 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 15:59:54 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 15:59:54 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 15:59:54 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 15:59:54 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00059s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 15:59:55 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 15:59:55 | INFO     | sqlalchemy.log:info:159 - [cached since 0.7595s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 15:59:55 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 15:59:55 | INFO     | sqlalchemy.log:info:159 - [cached since 1.01s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 15:59:56 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE connection_metadata (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	connection_name VARCHAR(255) NOT NULL, 
+	encrypted_credentials TEXT NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	last_used TIMESTAMP WITHOUT TIME ZONE, 
+	use_count INTEGER, 
+	is_active BOOLEAN, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 15:59:56 | INFO     | sqlalchemy.log:info:159 - [no key 0.00037s] ()
+2026-09-16 15:59:56 | INFO     | sqlalchemy.log:info:159 - CREATE UNIQUE INDEX ix_connection_metadata_connection_id ON connection_metadata (connection_id)
+2026-09-16 15:59:56 | INFO     | sqlalchemy.log:info:159 - [no key 0.00040s] ()
+2026-09-16 15:59:57 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_connection_metadata_id ON connection_metadata (id)
+2026-09-16 15:59:57 | INFO     | sqlalchemy.log:info:159 - [no key 0.00059s] ()
+2026-09-16 15:59:57 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE schema_embeddings (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	chunk_index INTEGER NOT NULL, 
+	chunk_text TEXT NOT NULL, 
+	chunk_metadata JSON NOT NULL, 
+	embedding VECTOR(384) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 15:59:57 | INFO     | sqlalchemy.log:info:159 - [no key 0.00036s] ()
+2026-09-16 15:59:58 | INFO     | sqlalchemy.log:info:159 - ROLLBACK
+2026-09-16 15:59:58 | ERROR    | __main__:main:16 - Failed to initialize database: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedObjectError'>: type "vector" does not exist
+[SQL: 
+CREATE TABLE schema_embeddings (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	chunk_index INTEGER NOT NULL, 
+	chunk_text TEXT NOT NULL, 
+	chunk_metadata JSON NOT NULL, 
+	embedding VECTOR(384) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-09-16 16:00:17 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 16:00:19 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 16:00:19 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:00:19 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 16:00:19 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:00:20 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 16:00:20 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:00:21 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 16:00:21 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:00:21 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00054s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - [cached since 0.7552s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - [cached since 1.008s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE connection_metadata (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	connection_name VARCHAR(255) NOT NULL, 
+	encrypted_credentials TEXT NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	last_used TIMESTAMP WITHOUT TIME ZONE, 
+	use_count INTEGER, 
+	is_active BOOLEAN, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 16:00:22 | INFO     | sqlalchemy.log:info:159 - [no key 0.00036s] ()
+2026-09-16 16:00:23 | INFO     | sqlalchemy.log:info:159 - CREATE UNIQUE INDEX ix_connection_metadata_connection_id ON connection_metadata (connection_id)
+2026-09-16 16:00:23 | INFO     | sqlalchemy.log:info:159 - [no key 0.00049s] ()
+2026-09-16 16:00:23 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_connection_metadata_id ON connection_metadata (id)
+2026-09-16 16:00:23 | INFO     | sqlalchemy.log:info:159 - [no key 0.00116s] ()
+2026-09-16 16:00:24 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE schema_embeddings (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	chunk_index INTEGER NOT NULL, 
+	chunk_text TEXT NOT NULL, 
+	chunk_metadata JSON NOT NULL, 
+	embedding VECTOR(384) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 16:00:24 | INFO     | sqlalchemy.log:info:159 - [no key 0.00038s] ()
+2026-09-16 16:00:24 | INFO     | sqlalchemy.log:info:159 - ROLLBACK
+2026-09-16 16:00:25 | ERROR    | __main__:main:16 - Failed to initialize database: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedObjectError'>: type "vector" does not exist
+[SQL: 
+CREATE TABLE schema_embeddings (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	chunk_index INTEGER NOT NULL, 
+	chunk_text TEXT NOT NULL, 
+	chunk_metadata JSON NOT NULL, 
+	embedding VECTOR(384) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-09-16 16:04:15 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 16:04:16 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 16:04:16 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:04:17 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 16:04:17 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:04:18 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 16:04:18 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:04:19 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 16:04:19 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:04:19 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00052s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - [cached since 0.806s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - [cached since 1.075s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE connection_metadata (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	connection_name VARCHAR(255) NOT NULL, 
+	encrypted_credentials TEXT NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	last_used TIMESTAMP WITHOUT TIME ZONE, 
+	use_count INTEGER, 
+	is_active BOOLEAN, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 16:04:20 | INFO     | sqlalchemy.log:info:159 - [no key 0.00037s] ()
+2026-09-16 16:04:21 | INFO     | sqlalchemy.log:info:159 - CREATE UNIQUE INDEX ix_connection_metadata_connection_id ON connection_metadata (connection_id)
+2026-09-16 16:04:21 | INFO     | sqlalchemy.log:info:159 - [no key 0.00035s] ()
+2026-09-16 16:04:21 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_connection_metadata_id ON connection_metadata (id)
+2026-09-16 16:04:21 | INFO     | sqlalchemy.log:info:159 - [no key 0.00061s] ()
+2026-09-16 16:04:22 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE schema_embeddings (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	chunk_index INTEGER NOT NULL, 
+	chunk_text TEXT NOT NULL, 
+	chunk_metadata JSON NOT NULL, 
+	embedding VECTOR(384) NOT NULL, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 16:04:22 | INFO     | sqlalchemy.log:info:159 - [no key 0.00049s] ()
+2026-09-16 16:04:22 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_schema_embeddings_id ON schema_embeddings (id)
+2026-09-16 16:04:22 | INFO     | sqlalchemy.log:info:159 - [no key 0.00058s] ()
+2026-09-16 16:04:23 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_schema_embeddings_connection_id ON schema_embeddings (connection_id)
+2026-09-16 16:04:23 | INFO     | sqlalchemy.log:info:159 - [no key 0.00033s] ()
+2026-09-16 16:04:23 | INFO     | sqlalchemy.log:info:159 - 
+CREATE TABLE query_history (
+	id SERIAL NOT NULL, 
+	connection_id VARCHAR(36) NOT NULL, 
+	question TEXT NOT NULL, 
+	generated_sql TEXT NOT NULL, 
+	executed_sql TEXT, 
+	success BOOLEAN NOT NULL, 
+	row_count INTEGER, 
+	execution_time_ms FLOAT, 
+	error_message TEXT, 
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	user_feedback INTEGER, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-16 16:04:23 | INFO     | sqlalchemy.log:info:159 - [no key 0.00044s] ()
+2026-09-16 16:04:24 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_query_history_id ON query_history (id)
+2026-09-16 16:04:24 | INFO     | sqlalchemy.log:info:159 - [no key 0.00033s] ()
+2026-09-16 16:04:25 | INFO     | sqlalchemy.log:info:159 - CREATE INDEX ix_query_history_connection_id ON query_history (connection_id)
+2026-09-16 16:04:25 | INFO     | sqlalchemy.log:info:159 - [no key 0.00052s] ()
+2026-09-16 16:04:25 | INFO     | sqlalchemy.log:info:159 - COMMIT
+2026-09-16 16:04:26 | INFO     | __main__:main:14 - Database initialized successfully!
+2026-09-16 16:06:10 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 16:06:12 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 16:06:12 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:06:12 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 16:06:12 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:06:13 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 16:06:13 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:06:14 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 16:06:14 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:06:14 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00065s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:06:15 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:06:15 | INFO     | sqlalchemy.log:info:159 - [cached since 0.7287s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:06:15 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:06:15 | INFO     | sqlalchemy.log:info:159 - [cached since 0.9727s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:06:15 | INFO     | sqlalchemy.log:info:159 - COMMIT
+2026-09-16 16:06:16 | INFO     | __main__:main:14 - Database initialized successfully!
+2026-09-16 16:06:56 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:06:56 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:06:56 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:07:01 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:07:01 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:07:06 | INFO     | uvicorn.server:_serve:91 - Started server process [23440]
+2026-09-16 16:07:06 | INFO     | uvicorn.server:_serve:91 - Started server process [23440]
+2026-09-16 16:07:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:07:06 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:07:06 | INFO     | backend.app.main:lifespan:80 - Starting PromptQL backend application
+2026-09-16 16:07:06 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:07:06 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:38:02 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:38:02 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:38:02 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:38:02 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:38:02 | INFO     | backend.app.main:lifespan:88 - Shutting down PromptQL backend application
+2026-09-16 16:38:02 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:38:02 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:38:02 | INFO     | uvicorn.server:_serve:101 - Finished server process [23440]
+2026-09-16 16:38:02 | INFO     | uvicorn.server:_serve:101 - Finished server process [23440]
+2026-09-16 16:38:51 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 16:38:53 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 16:38:53 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:38:54 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 16:38:54 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:38:55 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 16:38:55 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:38:56 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 16:38:56 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:38:56 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00081s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:38:56 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:38:56 | INFO     | sqlalchemy.log:info:159 - [cached since 0.7746s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:38:57 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:38:57 | INFO     | sqlalchemy.log:info:159 - [cached since 1.022s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:38:57 | INFO     | sqlalchemy.log:info:159 - COMMIT
+2026-09-16 16:38:57 | INFO     | __main__:main:14 - Database initialized successfully!
+2026-09-16 16:50:36 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:50:37 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:50:37 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:50:41 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:50:42 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:50:46 | INFO     | uvicorn.server:_serve:91 - Started server process [12336]
+2026-09-16 16:50:46 | INFO     | uvicorn.server:_serve:91 - Started server process [12336]
+2026-09-16 16:50:46 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:50:46 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:50:46 | INFO     | backend.app.main:lifespan:80 - Starting PromptQL backend application
+2026-09-16 16:50:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:50:46 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:50:48 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:50:48 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:50:48 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:50:48 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:50:48 | INFO     | backend.app.main:lifespan:88 - Shutting down PromptQL backend application
+2026-09-16 16:50:48 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:50:48 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:50:48 | INFO     | uvicorn.server:_serve:101 - Finished server process [12336]
+2026-09-16 16:50:48 | INFO     | uvicorn.server:_serve:101 - Finished server process [12336]
+2026-09-16 16:50:56 | INFO     | __main__:main:12 - Initializing database...
+2026-09-16 16:50:58 | INFO     | sqlalchemy.log:info:159 - select pg_catalog.version()
+2026-09-16 16:50:58 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:50:59 | INFO     | sqlalchemy.log:info:159 - select current_schema()
+2026-09-16 16:50:59 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:51:00 | INFO     | sqlalchemy.log:info:159 - show standard_conforming_strings
+2026-09-16 16:51:00 | INFO     | sqlalchemy.log:info:159 - [raw sql] ()
+2026-09-16 16:51:01 | INFO     | sqlalchemy.log:info:159 - BEGIN (implicit)
+2026-09-16 16:51:01 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:51:01 | INFO     | sqlalchemy.log:info:159 - [generated in 0.00048s] ('connection_metadata', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:51:01 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:51:01 | INFO     | sqlalchemy.log:info:159 - [cached since 0.801s ago] ('schema_embeddings', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:51:02 | INFO     | sqlalchemy.log:info:159 - SELECT pg_catalog.pg_class.relname 
+FROM pg_catalog.pg_class JOIN pg_catalog.pg_namespace ON pg_catalog.pg_namespace.oid = pg_catalog.pg_class.relnamespace 
+WHERE pg_catalog.pg_class.relname = $1::VARCHAR AND pg_catalog.pg_class.relkind = ANY (ARRAY[$2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR]) AND pg_catalog.pg_table_is_visible(pg_catalog.pg_class.oid) AND pg_catalog.pg_namespace.nspname != $7::VARCHAR
+2026-09-16 16:51:02 | INFO     | sqlalchemy.log:info:159 - [cached since 1.058s ago] ('query_history', 'r', 'p', 'f', 'v', 'm', 'pg_catalog')
+2026-09-16 16:51:02 | INFO     | sqlalchemy.log:info:159 - COMMIT
+2026-09-16 16:51:02 | INFO     | __main__:main:14 - Database initialized successfully!
+2026-09-16 16:51:35 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:51:35 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:51:35 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:51:40 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:51:40 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:51:45 | INFO     | uvicorn.server:_serve:91 - Started server process [20732]
+2026-09-16 16:51:45 | INFO     | uvicorn.server:_serve:91 - Started server process [20732]
+2026-09-16 16:51:45 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:51:45 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:51:45 | INFO     | backend.app.main:lifespan:80 - Starting PromptQL backend application
+2026-09-16 16:51:45 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:51:45 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:55:19 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:55:19 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:55:19 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:55:19 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:55:19 | INFO     | backend.app.main:lifespan:88 - Shutting down PromptQL backend application
+2026-09-16 16:55:19 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:55:19 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:55:19 | INFO     | uvicorn.server:_serve:101 - Finished server process [20732]
+2026-09-16 16:55:19 | INFO     | uvicorn.server:_serve:101 - Finished server process [20732]
+2026-09-16 16:55:41 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:55:41 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:55:42 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:56:30 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:56:31 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:56:31 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:56:35 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:56:36 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:56:40 | INFO     | uvicorn.server:_serve:91 - Started server process [25004]
+2026-09-16 16:56:40 | INFO     | uvicorn.server:_serve:91 - Started server process [25004]
+2026-09-16 16:56:40 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:56:40 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:56:40 | INFO     | backend.app.main:lifespan:80 - Starting PromptQL backend application
+2026-09-16 16:56:40 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:56:40 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:57:40 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:57:40 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 16:57:40 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:57:40 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 16:57:40 | INFO     | backend.app.main:lifespan:88 - Shutting down PromptQL backend application
+2026-09-16 16:57:40 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:57:40 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 16:57:40 | INFO     | uvicorn.server:_serve:101 - Finished server process [25004]
+2026-09-16 16:57:40 | INFO     | uvicorn.server:_serve:101 - Finished server process [25004]
+2026-09-16 16:58:29 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:58:29 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-16 16:58:30 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:58:34 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-16 16:58:35 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-16 16:58:39 | INFO     | uvicorn.server:_serve:91 - Started server process [1476]
+2026-09-16 16:58:39 | INFO     | uvicorn.server:_serve:91 - Started server process [1476]
+2026-09-16 16:58:39 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:58:39 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-16 16:58:39 | INFO     | backend.app.main:lifespan:80 - Starting PromptQL backend application
+2026-09-16 16:58:39 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 16:58:39 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-16 17:03:04 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 17:03:04 | INFO     | uvicorn.server:shutdown:270 - Shutting down
+2026-09-16 17:03:04 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 17:03:04 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-16 17:03:04 | INFO     | backend.app.main:lifespan:88 - Shutting down PromptQL backend application
+2026-09-16 17:03:04 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 17:03:04 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-16 17:03:04 | INFO     | uvicorn.server:_serve:101 - Finished server process [1476]
+2026-09-16 17:03:04 | INFO     | uvicorn.server:_serve:101 - Finished server process [1476]
