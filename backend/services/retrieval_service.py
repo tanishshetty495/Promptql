@@ -161,43 +161,11 @@ class RetrievalService:
         limit: int = 5,
         max_fk_expansions: int = 3
     ) -> List[Dict[str, Any]]:
-        """
-        Perform hybrid retrieval combining semantic and keyword search with FK traversal.
-
-        Args:
-            connection_id: Unique identifier for this connection
-            query_text: Natural language query
-            limit: Maximum number of results to return
-            max_fk_expansions: Maximum FK expansions allowed (to prevent context bloat)
-
-        Returns:
-            List of relevant schema chunks with retrieval metadata
-        """
         try:
-            if not self._bm25_index or not self._schema_graph:
-                raise RetrievalError("Retrieval index not initialized")
-
-            # 1. Semantic search using pgvector (via schema service)
-            semantic_results = await self.schema_service.retrieve_relevant_schema(
-                connection_id, query_text, limit=limit*2
+            results = await self.schema_service.retrieve_relevant_schema(
+                connection_id, query_text, limit=limit
             )
-
-            # 2. Keyword search using BM25
-            keyword_results = self._bm25_search(query_text, limit=limit*2)
-
-            # 3. Combine using Reciprocal Rank Fusion
-            combined_results = self._combine_rankings(
-                semantic_results, keyword_results, limit
-            )
-
-            # 4. Perform FK graph traversal to find connected tables
-            expanded_results = await self._expand_with_fk_traversal(
-                combined_results, max_fk_expansions
-            )
-
-            # 5. Limit final results and return
-            return expanded_results[:limit]
-
+            return results
         except Exception as e:
             app_logger.error(f"Hybrid retrieval failed: {e}")
             raise RetrievalError("Hybrid retrieval failed") from e

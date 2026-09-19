@@ -65,6 +65,8 @@ class ExecutionService:
                     details={'validation_errors': validation_errors}
                 )
 
+            # Ensure the connection pool is initialized for these credentials
+            await connection_service.initialize_pool(credentials)
             # Get connection from pool
             async with connection_service.get_connection() as conn:
                 # Set session-level safety overrides

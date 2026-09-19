@@ -151,7 +151,7 @@ class ValidationService:
         errors = []
 
         # Check for multiple statements (should be caught by parse_one, but double-check)
-        statements = sqlglot.split(original_sql)
+        statements = sqlglot.parse(original_sql, read="postgres")
         if len(statements) > 1:
             errors.append("Multiple SQL statements are not allowed")
 

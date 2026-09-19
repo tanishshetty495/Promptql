@@ -17,6 +17,9 @@ from backend.core.config import settings
 from backend.core.exceptions import SchemaExtractionError
 from backend.core.logger import app_logger
 from backend.services.connection_service import connection_service
+from backend.db.base import AsyncSessionLocal
+from backend.db.models import SchemaEmbeddings
+from sqlalchemy import delete, text
 
 
 class SchemaService:
@@ -54,12 +57,8 @@ class SchemaService:
         try:
             app_logger.info(f"Extracting schema for connection {connection_id}")
 
-            # Construct connection string
-            dsn = (
-                f"postgresql://{credentials.get('user')}:{quote_plus(credentials.get('password', ''))}"
-                f"@{credentials.get('host')}:{credentials.get('port', 5432)}"
-                f"/{credentials.get('database')}"
-            )
+            # Construct connection string using the shared DSN builder
+            dsn = connection_service._build_dsn(credentials)
 
             # Connect to database
             conn = await asyncpg.connect(dsn)
@@ -106,7 +105,6 @@ class SchemaService:
             t.table_type,
             c.column_name,
             c.ordinal_position,
-            c.column_key,
             c.is_nullable,
             c.data_type,
             c.character_maximum_length,
@@ -114,7 +112,7 @@ class SchemaService:
             c.numeric_scale,
             c.column_default,
             pg_catalog.col_description(
-                (SELECT pg_catalog.oid FROM pg_catalog.pg_class c2
+                (SELECT c2.oid FROM pg_catalog.pg_class c2
                  JOIN pg_catalog.pg_namespace n ON n.oid = c2.relnamespace
                  WHERE c2.relname = t.table_name AND n.nspname = t.table_schema),
                 c.ordinal_position
@@ -381,12 +379,8 @@ class SchemaService:
             Hash string representing current schema state
         """
         try:
-            # Construct connection string
-            dsn = (
-                f"postgresql://{credentials.get('user')}:{quote_plus(credentials.get('password', ''))}"
-                f"@{credentials.get('host')}:{credentials.get('port', 5432)}"
-                f"/{credentials.get('database')}"
-            )
+            # Construct connection string using the shared DSN builder
+            dsn = connection_service._build_dsn(credentials)
 
             # Connect to database
             conn = await asyncpg.connect(dsn)
@@ -545,28 +539,25 @@ class SchemaService:
             texts = [chunk['text'] for chunk in schema_chunks]
             embeddings = self.embedding_model.encode(texts)
 
-            # Store in application database
-            async with connection_service.get_connection() as conn:
+            # Store in application database using SQLAlchemy session
+            async with AsyncSessionLocal() as session:
                 # Delete existing embeddings for this connection
-                await conn.execute(
-                    "DELETE FROM schema_embeddings WHERE connection_id = $1",
-                    connection_id
+                await session.execute(
+                    delete(SchemaEmbeddings).where(SchemaEmbeddings.connection_id == connection_id)
                 )
-
-                # Insert new embeddings
+                # Prepare new embedding objects
+                embeddings_objs = []
                 for i, (chunk, embedding) in enumerate(zip(schema_chunks, embeddings)):
-                    await conn.execute(
-                        """
-                        INSERT INTO schema_embeddings
-                        (connection_id, chunk_index, chunk_text, chunk_metadata, embedding)
-                        VALUES ($1, $2, $3, $4, $5)
-                        """,
-                        connection_id,
-                        i,
-                        chunk['text'],
-                        json.dumps(chunk['metadata']),
-                        embedding.tolist()  # Store as list for pgvector
+                    obj = SchemaEmbeddings(
+                        connection_id=connection_id,
+                        chunk_index=i,
+                        chunk_text=chunk['text'],
+                        chunk_metadata=chunk['metadata'],
+                        embedding=embedding.tolist()  # Store as list for pgvector
                     )
+                    embeddings_objs.append(obj)
+                session.add_all(embeddings_objs)
+                await session.commit()
 
             app_logger.info(f"Stored {len(schema_chunks)} schema embeddings for connection {connection_id}")
 
@@ -594,34 +585,39 @@ class SchemaService:
         try:
             # Generate query embedding
             query_embedding = self.embedding_model.encode([query_text])[0]
+            embedding_str = '[' + ','.join(map(str, query_embedding.tolist())) + ']'
 
-            async with connection_service.get_connection() as conn:
-                # Perform hybrid search using pgvector and text search
-                # This is a simplified version - in practice you'd want to implement
-                # proper hybrid search with RRF (Reciprocal Rank Fusion)
-                results = await conn.fetch(
-                    """
-                    SELECT
-                        chunk_text,
-                        chunk_metadata,
-                        1 - (embedding <=> $1) AS similarity_score
-                    FROM schema_embeddings
-                    WHERE connection_id = $2
-                    ORDER BY embedding <=> $1
-                    LIMIT $3
-                    """,
-                    query_embedding.tolist(),
-                    connection_id,
-                    limit * 2  # Get more candidates for reranking
+            # Search in application database using SQLAlchemy session
+            async with AsyncSessionLocal() as session:
+                results = await session.execute(
+                    text("""
+                        SELECT
+                            chunk_text,
+                            chunk_metadata,
+                            1 - (embedding <=> :query_embedding) AS similarity_score
+                        FROM schema_embeddings
+                        WHERE connection_id = :connection_id
+                        ORDER BY embedding <=> :query_embedding
+                        LIMIT :limit
+                    """),
+                    {
+                        "query_embedding": embedding_str,
+                        "connection_id": connection_id,
+                        "limit": limit * 2
+                    }
                 )
 
                 # Convert results
                 chunks = []
                 for row in results:
+                    # chunk_metadata might be a string (JSON) or already a dict
+                    metadata = row.chunk_metadata
+                    if isinstance(metadata, str):
+                        metadata = json.loads(metadata)
                     chunk = {
-                        'text': row['chunk_text'],
-                        'metadata': json.loads(row['chunk_metadata']),
-                        'similarity_score': float(row['similarity_score'])
+                        'text': row.chunk_text,
+                        'metadata': metadata,
+                        'similarity_score': float(row.similarity_score)
                     }
                     chunks.append(chunk)
 

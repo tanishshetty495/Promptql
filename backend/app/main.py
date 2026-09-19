@@ -20,6 +20,7 @@ from backend.services.validation_service import ValidationService
 from backend.services.execution_service import ExecutionService
 from backend.db.base import AsyncSessionLocal
 from backend.db.models import ConnectionMetadata
+from sqlalchemy import text
 
 
 # Global instances (initialized in lifespan)
@@ -254,8 +255,8 @@ async def execute_query(
         # Look up connection metadata from database
         async with AsyncSessionLocal() as db_session:
             result = await db_session.execute(
-                "SELECT encrypted_credentials FROM connection_metadata WHERE connection_id = $1",
-                connection_id
+                text("SELECT encrypted_credentials FROM connection_metadata WHERE connection_id = :connection_id"),
+                {"connection_id": connection_id}
             )
             row = result.fetchone()
             if not row:
@@ -284,11 +285,16 @@ async def execute_query(
             detail=f"Query execution failed: {str(e)}",
         )
 
+    # Execute query with decrypted credentials
+    rows, metadata = await execution_service.execute_query(
+        sql_query, connection_id, credentials
+    )
+
     return {
-        "connection_id": connection_id,
-        "question": question,
-        "generated_sql": sql_query,
-        "results": results,
+        "sql": sql_query,
+        "results": rows,
+        "metadata": metadata,
+        "row_count": len(rows)
     }
 
 
