@@ -6079,3 +6079,78 @@ OSError: [Errno 22] Invalid argument
 2026-09-19 18:01:42 | INFO     | sqlalchemy.log:info:159 - COMMIT
 2026-09-19 18:01:45 | INFO     | backend.services.connection_service:initialize_pool:131 - Database connection pool initialized successfully
 2026-09-19 18:01:46 | INFO     | backend.services.execution_service:execute_query:94 - Query executed successfully: 1 rows in 3444.68ms
+2026-09-20 15:57:01 | INFO     | uvicorn.server:_serve:91 - Started server process [14992]
+2026-09-20 15:57:01 | INFO     | uvicorn.server:_serve:91 - Started server process [14992]
+2026-09-20 15:57:01 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:57:01 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:57:01 | INFO     | backend.app.main:lifespan:63 - Starting PromptQL backend application
+2026-09-20 15:57:01 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:57:02 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-20 15:57:02 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:57:07 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:57:07 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:57:12 | INFO     | backend.app.main:lifespan:70 - Embedding model and services initialized
+2026-09-20 15:57:12 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:57:12 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:57:12 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-09-20 15:57:12 | INFO     | uvicorn.server:_log_started_message:222 - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-09-20 15:58:05 | INFO     | uvicorn.server:_serve:91 - Started server process [24648]
+2026-09-20 15:58:05 | INFO     | uvicorn.server:_serve:91 - Started server process [24648]
+2026-09-20 15:58:05 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:58:05 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:58:05 | INFO     | backend.app.main:lifespan:63 - Starting PromptQL backend application
+2026-09-20 15:58:05 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:58:07 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-20 15:58:07 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:58:11 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:58:12 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:58:16 | INFO     | backend.app.main:lifespan:70 - Embedding model and services initialized
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:58:16 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:58:16 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:58:16 | INFO     | backend.app.main:lifespan:73 - Shutting down PromptQL backend application
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-20 15:58:16 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-20 15:58:46 | INFO     | uvicorn.server:_serve:91 - Started server process [25052]
+2026-09-20 15:58:46 | INFO     | uvicorn.server:_serve:91 - Started server process [25052]
+2026-09-20 15:58:46 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:58:46 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:58:46 | INFO     | backend.app.main:lifespan:63 - Starting PromptQL backend application
+2026-09-20 15:58:46 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:58:47 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-20 15:58:47 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:58:52 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:58:52 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:58:56 | INFO     | backend.app.main:lifespan:70 - Embedding model and services initialized
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:58:56 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:58:56 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:58:56 | INFO     | backend.app.main:lifespan:73 - Shutting down PromptQL backend application
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-20 15:58:56 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-20 15:59:12 | INFO     | uvicorn.server:_serve:91 - Started server process [11948]
+2026-09-20 15:59:12 | INFO     | uvicorn.server:_serve:91 - Started server process [11948]
+2026-09-20 15:59:12 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:59:12 | INFO     | uvicorn.lifespan.on:startup:48 - Waiting for application startup.
+2026-09-20 15:59:12 | INFO     | backend.app.main:lifespan:63 - Starting PromptQL backend application
+2026-09-20 15:59:12 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:59:13 | WARNING  | huggingface_hub.utils._http:_warn_on_warning_headers:904 - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-09-20 15:59:13 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:59:18 | INFO     | sentence_transformers.base.model:__init__:199 - No device provided, using cuda:0
+2026-09-20 15:59:18 | INFO     | sentence_transformers.base.model:_load_modules:1080 - Loading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.
+2026-09-20 15:59:22 | INFO     | backend.app.main:lifespan:70 - Embedding model and services initialized
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:startup:62 - Application startup complete.
+2026-09-20 15:59:22 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:59:22 | ERROR    | uvicorn.server:startup:178 - [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8000): [winerror 10048] only one usage of each socket address (protocol/network address/port) is normally permitted
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:shutdown:67 - Waiting for application shutdown.
+2026-09-20 15:59:22 | INFO     | backend.app.main:lifespan:73 - Shutting down PromptQL backend application
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.
+2026-09-20 15:59:22 | INFO     | uvicorn.lifespan.on:shutdown:76 - Application shutdown complete.

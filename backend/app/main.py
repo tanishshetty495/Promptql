@@ -1,7 +1,6 @@
 """
 Main application entry point for PromptQL backend.
 """
-import logging
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
@@ -55,7 +54,7 @@ async def verify_token(
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
     """
     Application lifespan handler.
     Loads the embedding model and initializes services on startup.
@@ -102,7 +101,7 @@ async def health_check():
 @app.post("/connections", tags=["connections"])
 async def create_connection(
     connection_data: dict,
-    token: str = Depends(verify_token),
+    _: str = Depends(verify_token),
 ):
     """
     Store a new database connection.
@@ -183,7 +182,7 @@ async def create_connection(
 @app.post("/query", tags=["query"])
 async def execute_query(
     query_data: dict,
-    token: str = Depends(verify_token),
+    _: str = Depends(verify_token),
 ):
     """
     Execute a natural language query against a database connection.
@@ -270,7 +269,7 @@ async def execute_query(
         credentials = connection_service.decrypt_credentials(encrypted_credentials)
 
         # Execute query with decrypted credentials
-        results = await execution_service.execute_query(
+        rows, metadata = await execution_service.execute_query(
             sql_query,  # SQL query as first parameter
             connection_id,  # Connection ID as second parameter
             credentials   # Credentials as third parameter
@@ -284,11 +283,6 @@ async def execute_query(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Query execution failed: {str(e)}",
         )
-
-    # Execute query with decrypted credentials
-    rows, metadata = await execution_service.execute_query(
-        sql_query, connection_id, credentials
-    )
 
     return {
         "sql": sql_query,

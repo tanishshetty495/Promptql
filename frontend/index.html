@@ -250,7 +250,26 @@
 
                                 <!-- Results Display -->
                                 <div id="results-display">
-                                    <!-- Results will be shown here -->
+                                  <ul class="nav nav-tabs" id="results-tabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-pane" type="button" role="tab" aria-controls="table-pane" aria-selected="true">Table</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="chart-tab" data-bs-toggle="tab" data-bs-target="#chart-pane" type="button" role="tab" aria-controls="chart-pane" aria-selected="false">Chart</button>
+                                    </li>
+                                  </ul>
+                                  <div class="tab-content" id="results-tab-content">
+                                    <div class="tab-pane fade show active" id="table-pane" role="tabpanel" aria-labelledby="table-tab" tabindex="0">
+                                      <div id="table-results">
+                                        <!-- Table will be shown here -->
+                                      </div>
+                                    </li>
+                                    <div class="tab-pane fade" id="chart-pane" role="tabpanel" aria-labelledby="chart-tab" tabindex="0">
+                                      <div id="chart-container">
+                                        <canvas id="results-chart"></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
 
                                 <!-- Metadata -->
@@ -327,6 +346,8 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Frontend JavaScript for PromptQL
         class PromptQLFrontend {
@@ -353,6 +374,7 @@
                 this.sql = '';
                 this.results = [];
                 this.metadata = {};
+                this.chart = null;
 
                 // Initialize the application
                 this.init();
@@ -439,6 +461,17 @@
                         // Show modal
                         const modal = new bootstrap.Modal(document.getElementById('connectionModal'));
                         modal.show();
+                    });
+                }
+
+                // Chart tab listener
+                const chartTab = document.getElementById('chart-tab');
+                if (chartTab) {
+                    chartTab.addEventListener('shown.bs.tab', () => {
+                        // Re-render chart if we have data
+                        if (this.results.length > 0) {
+                            this.displayChart();
+                        }
                     });
                 }
             }
@@ -708,16 +741,18 @@
             }
 
             displayResults() {
-                const resultsDisplay = document.getElementById('results-display');
-                if (!resultsDisplay) return;
+                const tableResults = document.getElementById('table-results');
+                if (!tableResults) return;
 
                 if (this.results.length === 0) {
-                    resultsDisplay.innerHTML = `
+                    tableResults.innerHTML = `
                         <div class="no-results">
                             <i class="fas fa-table"></i>
                             <p>No results returned</p>
                         </div>
                     `;
+                    // Also clear chart
+                    this.clearChart();
                     return;
                 }
 
@@ -754,8 +789,277 @@
                 });
                 table.appendChild(tbody);
 
-                resultsDisplay.innerHTML = '';
-                resultsDisplay.appendChild(table);
+                tableResults.innerHTML = '';
+                tableResults.appendChild(table);
+
+                // Also render chart if data is suitable
+                this.displayChart();
+            }
+
+            displayChart() {
+                console.log('[displayChart] Started. Results length:', this.results.length);
+                const ctx = document.getElementById('results-chart');
+                console.log('[displayChart] Canvas element:', ctx);
+                if (!ctx) {
+                    console.error('[displayChart] Canvas not found!');
+                    return;
+                }
+
+                // Clear previous chart
+                if (this.chart) {
+                    console.log('[displayChart] Destroying previous chart');
+                    this.chart.destroy();
+                }
+
+                if (this.results.length === 0) {
+                    console.log('[displayChart] No data to chart');
+                    ctx.innerHTML = '<p class="text-center text-muted">No data to chart</p>';
+                    return;
+                }
+
+                // Determine chart type based on data
+                const chartType = this.determineChartType(this.results);
+                console.log('[displayChart] Determined chart type:', chartType);
+                if (!chartType) {
+                    console.log('[displayChart] Could not determine chart type');
+                    ctx.innerHTML = '<p class="text-center text-muted">Cannot determine chart type for this data</p>';
+                    return;
+                }
+
+                // Prepare data for chart
+                const chartData = this.prepareChartData(this.results, chartType);
+                console.log('[displayChart] Prepared chart data:', chartData);
+                if (!chartData) {
+                    console.log('[displayChart] Unable to prepare chart data');
+                    ctx.innerHTML = '<p class="text-center text-muted">Unable to prepare chart data</p>';
+                    return;
+                }
+
+                // Create chart
+                console.log('[displayChart] Creating chart with type:', chartType);
+                this.chart = new Chart(ctx, {
+                    type: chartType,
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: this.getChartTitle()
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                console.log('[displayChart] Chart created:', this.chart);
+            }
+
+            determineChartType(results) {
+                console.log('[determineChartType] Called with results length:', results.length);
+                if (results.length === 0) {
+                    console.log('[determineChartType] No results, returning null');
+                    return null;
+                }
+
+                // Get column names and types
+                const columns = Object.keys(results[0]);
+                console.log('[determineChartType] Columns:', columns);
+                const columnTypes = {};
+
+                // Infer types from first few rows
+                columns.forEach(col => {
+                    columnTypes[col] = 'string'; // default
+                });
+
+                // Check up to 5 rows for type inference
+                const sampleSize = Math.min(5, results.length);
+                console.log('[determineChartType] Sample size:', sampleSize);
+                for (let i = 0; i < sampleSize; i++) {
+                    columns.forEach(col => {
+                        const val = results[i][col];
+                        if (typeof val === 'number') {
+                            columnTypes[col] = 'number';
+                            console.log('[determineChartType] Setting', col, 'to number (value:', val, ')');
+                        } else if (val !== null && val !== undefined && !isNaN(Date.parse(val))) {
+                            columnTypes[col] = 'date';
+                            console.log('[determineChartType] Setting', col, 'to date (value:', val, ')');
+                        }
+                    });
+                }
+
+                // Count numeric and categorical columns
+                const numericCols = columns.filter(col => columnTypes[col] === 'number');
+                const categoricalCols = columns.filter(col => columnTypes[col] === 'string');
+                const dateCols = columns.filter(col => columnTypes[col] === 'date');
+                console.log('[determineChartType] Numeric columns:', numericCols);
+                console.log('[determineChartType] Categorical columns:', categoricalCols);
+                console.log('[determineChartType] Date columns:', dateCols);
+
+                // If we have a date column and a numeric column, use line chart
+                if (dateCols.length > 0 && numericCols.length > 0) {
+                    console.log('[determineChartType] Returning line chart (date + numeric)');
+                    return 'line';
+                }
+
+                // If we have a categorical column and a numeric column, use bar chart
+                if (categoricalCols.length > 0 && numericCols.length > 0) {
+                    console.log('[determineChartType] Returning bar chart (categorical + numeric)');
+                    return 'bar';
+                }
+
+                // If we have only numeric columns, use scatter or line? For simplicity, use line if more than one numeric column
+                if (numericCols.length >= 2) {
+                    console.log('[determineChartType] Returning line chart (>=2 numeric)');
+                    return 'line';
+                }
+
+                // Default to bar for categorical data
+                if (categoricalCols.length > 0) {
+                    console.log('[determineChartType] Returning bar chart (categorical only)');
+                    return 'bar';
+                }
+
+                console.log('[determineChartType] No suitable chart type found, returning null');
+                return null;
+            }
+
+            prepareChartData(results, chartType) {
+                console.log('[prepareChartData] Called with chartType:', chartType, 'results length:', results.length);
+                if (results.length === 0) {
+                    console.log('[prepareChartData] No results, returning null');
+                    return null;
+                }
+
+                const columns = Object.keys(results[0]);
+                console.log('[prepareChartData] Columns:', columns);
+
+                // Infer types again
+                const columnTypes = {};
+                columns.forEach(col => {
+                    columnTypes[col] = 'string';
+                });
+
+                const sampleSize = Math.min(5, results.length);
+                console.log('[prepareChartData] Sample size:', sampleSize);
+                for (let i = 0; i < sampleSize; i++) {
+                    columns.forEach(col => {
+                        const val = results[i][col];
+                        if (typeof val === 'number') {
+                            columnTypes[col] = 'number';
+                            console.log('[prepareChartData] Setting', col, 'to number (value:', val, ')');
+                        } else if (val !== null && val !== undefined && !isNaN(Date.parse(val))) {
+                            columnTypes[col] = 'date';
+                            console.log('[prepareChartData] Setting', col, 'to date (value:', val, ')');
+                        }
+                    });
+                }
+
+                const numericCols = columns.filter(col => columnTypes[col] === 'number');
+                const categoricalCols = columns.filter(col => columnTypes[col] === 'string');
+                const dateCols = columns.filter(col => columnTypes[col] === 'date');
+                console.log('[prepareChartData] Numeric columns:', numericCols);
+                console.log('[prepareChartData] Categorical columns:', categoricalCols);
+                console.log('[prepareChartData] Date columns:', dateCols);
+
+                let labels = [];
+                const datasets = [];
+
+                if (chartType === 'line' && dateCols.length > 0 && numericCols.length > 0) {
+                    console.log('[prepareChartData] Processing line chart with date and numeric');
+                    // Use first date column for labels, first numeric column for data
+                    const dateCol = dateCols[0];
+                    const numericCol = numericCols[0];
+
+                    labels = results.map(row => {
+                        const val = row[dateCol];
+                        if (val instanceof Date) {
+                            return val.toLocaleDateString();
+                        }
+                        return val;
+                    });
+
+                    datasets.push({
+                        label: numericCol.replace('_', ' ').toUpperCase(),
+                        data: results.map(row => row[numericCol]),
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1
+                    });
+                } else if (chartType === 'bar' && categoricalCols.length > 0 && numericCols.length > 0) {
+                    console.log('[prepareChartData] Processing bar chart with categorical and numeric');
+                    // Use first categorical column for labels, first numeric column for data
+                    const catCol = categoricalCols[0];
+                    const numericCol = numericCols[0];
+
+                    labels = results.map(row => row[catCol]);
+
+                    datasets.push({
+                        label: numericCol.replace('_', ' ').toUpperCase(),
+                        data: results.map(row => row[numericCol]),
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    });
+                } else if (chartType === 'line' && numericCols.length >= 2) {
+                    console.log('[prepareChartData] Processing line chart with >=2 numeric columns');
+                    // Use first numeric column for labels (index), second numeric column for data
+                    // This is a simple approach; we could do better
+                    labels = Array.from({length: results.length}, (_, i) => i + 1);
+                    const numericCol1 = numericCols[0];
+                    const numericCol2 = numericCols[1];
+
+                    datasets.push({
+                        label: numericCol1.replace('_', ' ').toUpperCase(),
+                        data: results.map(row => row[numericCol1]),
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        tension: 0.1
+                    }, {
+                        label: numericCol2.replace('_', ' ').toUpperCase(),
+                        data: results.map(row => row[numericCol2]),
+                        borderColor: 'rgb(54, 162, 235)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        tension: 0.1
+                    });
+                } else {
+                    console.log('[prepareChartData] No matching condition for chartType:', chartType, 'returning null');
+                    return null;
+                }
+
+                console.log('[prepareChartData] Returning labels:', labels, 'datasets:', datasets);
+                return {
+                    labels: labels,
+                    datasets: datasets
+                };
+            }
+
+            getChartTitle() {
+                // Use the user's question as the chart title if available
+                const questionInput = document.getElementById('question-input');
+                if (questionInput && questionInput.value.trim()) {
+                    return questionInput.value.trim();
+                }
+                return 'Query Results';
+            }
+
+            clearChart() {
+                const ctx = document.getElementById('results-chart');
+                if (ctx) {
+                    ctx.innerHTML = '';
+                }
+                if (this.chart) {
+                    this.chart.destroy();
+                    this.chart = null;
+                }
             }
 
             displayMetadata() {
