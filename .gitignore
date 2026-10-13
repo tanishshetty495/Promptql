@@ -47,3 +47,6 @@ backend8001.log
 startup.log
 startup.pid
 server.log
+
+# Claude Code local settings
+.claude/settings.local.json
