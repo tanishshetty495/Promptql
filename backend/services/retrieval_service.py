@@ -16,6 +16,9 @@ from backend.core.exceptions import RetrievalError
 from backend.core.logger import app_logger
 from backend.services.connection_service import connection_service
 from backend.services.schema_service import SchemaService
+from backend.db.base import AsyncSessionLocal
+from backend.db.models import GoldenQueries
+from sqlalchemy import text
 
 
 class RetrievalService:
@@ -388,3 +391,100 @@ class RetrievalService:
         return await self.hybrid_retrieval(
             connection_id, query_text, limit=limit, max_fk_expansions=settings.MAX_FK_EXPANSIONS if hasattr(settings, 'MAX_FK_EXPANSIONS') else 3
         )
+
+    async def store_golden_query(
+        self,
+        connection_id: str,
+        question: str,
+        sql: str
+    ) -> None:
+        """
+        Store a successful question-SQL pair as a golden query for few-shot learning.
+
+        Args:
+            connection_id: Unique identifier for this connection
+            question: The natural language question
+            sql: The successfully executed SQL query
+        """
+        try:
+            # Generate embedding for the question
+            question_embedding = self.schema_service.embedding_model.encode([question])[0]
+            embedding_str = '[' + ','.join(map(str, question_embedding.tolist())) + ']'
+
+            # Store in application database using SQLAlchemy session
+            async with AsyncSessionLocal() as session:
+                # Check if we already have this exact question for this connection (optional deduplication)
+                # For now, we'll allow duplicates; could add a unique constraint or check if desired
+                obj = GoldenQueries(
+                    connection_id=connection_id,
+                    question=question,
+                    sql=sql,
+                    embedding=question_embedding.tolist()  # Store as list for pgvector
+                )
+                session.add(obj)
+                await session.commit()
+
+            app_logger.info(f"Stored golden query for connection {connection_id}")
+
+        except Exception as e:
+            app_logger.error(f"Failed to store golden query: {e}")
+            # Don't raise the exception as we don't want to fail the main flow if storing golden query fails
+            # But we log it for monitoring
+
+    async def retrieve_golden_queries(
+        self,
+        connection_id: str,
+        question: str,
+        limit: int = 2
+    ) -> List[Dict[str, Any]]:
+        """
+        Retrieve similar golden queries for few-shot learning.
+
+        Args:
+            connection_id: Unique identifier for this connection
+            question: The natural language question to find similar examples for
+            limit: Maximum number of golden queries to return
+
+        Returns:
+            List of golden query dictionaries with keys: question, sql, similarity_score
+        """
+        try:
+            # Generate query embedding
+            query_embedding = self.schema_service.embedding_model.encode([question])[0]
+            embedding_str = '[' + ','.join(map(str, query_embedding.tolist())) + ']'
+
+            # Search in application database using SQLAlchemy session
+            async with AsyncSessionLocal() as session:
+                results = await session.execute(
+                    text("""
+                        SELECT
+                            question,
+                            sql,
+                            1 - (embedding <=> :query_embedding) AS similarity_score
+                        FROM golden_queries
+                        WHERE connection_id = :connection_id
+                        ORDER BY embedding <=> :query_embedding
+                        LIMIT :limit
+                    """),
+                    {
+                        "query_embedding": embedding_str,
+                        "connection_id": connection_id,
+                        "limit": limit
+                    }
+                )
+
+                # Convert results
+                golden_queries = []
+                for row in results:
+                    golden_query = {
+                        'question': row.question,
+                        'sql': row.sql,
+                        'similarity_score': float(row.similarity_score)
+                    }
+                    golden_queries.append(golden_query)
+
+                return golden_queries
+
+        except Exception as e:
+            app_logger.error(f"Failed to retrieve golden queries: {e}")
+            return []  # Return empty list on failure to not break the main flow

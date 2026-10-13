@@ -1,31 +1,0 @@
-14:47:05 - LiteLLM:DEBUG: litellm_logging.py:231 - [Non-Blocking] Unable to import GenericAPILogger - LiteLLM Enterprise Feature - No module named 'litellm_enterprise'
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1095 - Using AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1161 - Creating AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1198 - NEW SESSION: Creating new ClientSession (no shared session provided)
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1095 - Using AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1161 - Creating AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1198 - NEW SESSION: Creating new ClientSession (no shared session provided)
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1095 - Using AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1161 - Creating AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1198 - NEW SESSION: Creating new ClientSession (no shared session provided)
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1095 - Using AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1161 - Creating AiohttpTransport...
-14:47:06 - LiteLLM:DEBUG: http_handler.py:1198 - NEW SESSION: Creating new ClientSession (no shared session provided)
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36muvicorn.server[0m:[36m_serve[0m:[36m91[0m - [1mStarted server process [13548][0m
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36muvicorn.server[0m:[36m_serve[0m:[36m91[0m - [1mStarted server process [13548][0m
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36muvicorn.lifespan.on[0m:[36mstartup[0m:[36m48[0m - [1mWaiting for application startup.[0m
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36muvicorn.lifespan.on[0m:[36mstartup[0m:[36m48[0m - [1mWaiting for application startup.[0m
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36mbackend.app.main[0m:[36mlifespan[0m:[36m60[0m - [1mStarting PromptQL backend application[0m
-[32m2026-09-17 14:47:06[0m | [1mINFO    [0m | [36msentence_transformers.base.model[0m:[36m__init__[0m:[36m199[0m - [1mNo device provided, using cuda:0[0m
-Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-[32m2026-09-17 14:47:07[0m | [33m[1mWARNING [0m | [36mhuggingface_hub.utils._http[0m:[36m_warn_on_warning_headers[0m:[36m904[0m - [33m[1mWarning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.[0m
-[32m2026-09-17 14:47:07[0m | [1mINFO    [0m | [36msentence_transformers.base.model[0m:[36m_load_modules[0m:[36m1080[0m - [1mLoading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.[0m
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|##########| 103/103 [00:00<00:00, 19461.81it/s]
-[32m2026-09-17 14:47:11[0m | [1mINFO    [0m | [36msentence_transformers.base.model[0m:[36m__init__[0m:[36m199[0m - [1mNo device provided, using cuda:0[0m
-[32m2026-09-17 14:47:12[0m | [1mINFO    [0m | [36msentence_transformers.base.model[0m:[36m_load_modules[0m:[36m1080[0m - [1mLoading SentenceTransformer model from sentence-transformers/all-MiniLM-L6-v2.[0m
-Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|##########| 103/103 [00:00<00:00, 10584.67it/s]
-[32m2026-09-17 14:47:16[0m | [1mINFO    [0m | [36mbackend.app.main[0m:[36mlifespan[0m:[36m67[0m - [1mEmbedding model and services initialized[0m
-[32m2026-09-17 14:47:16[0m | [1mINFO    [0m | [36muvicorn.lifespan.on[0m:[36mstartup[0m:[36m62[0m - [1mApplication startup complete.[0m
-[32m2026-09-17 14:47:16[0m | [1mINFO    [0m | [36muvicorn.lifespan.on[0m:[36mstartup[0m:[36m62[0m - [1mApplication startup complete.[0m
-[32m2026-09-17 14:47:16[0m | [1mINFO    [0m | [36muvicorn.server[0m:[36m_log_started_message[0m:[36m222[0m - [1mUvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)[0m
-[32m2026-09-17 14:47:16[0m | [1mINFO    [0m | [36muvicorn.server[0m:[36m_log_started_message[0m:[36m222[0m - [1mUvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)[0m

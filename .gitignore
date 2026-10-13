@@ -1,0 +1,49 @@
+# Logs
+*.log
+backend.err
+backend.out
+backend.output
+
+# PID files
+*.pid
+
+# Environment files
+.env
+backend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test files (development/testing scripts)
+test_*.py
+*test*.py
+backend/test_*.py
+check_departments.py
+
+# Documentation files that might be temporary
+BACKEND_SUMMARY.md
+FRONTEND_COMPLETION.md
+GETTING_STARTED.md
+NEXT_STEPS.md
+PROJECT_OVERVIEW.md
+PROJECT_SUMMARY.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+backend2.log
+backend2.pid
+backend8001.log
+startup.log
+startup.pid
+server.log

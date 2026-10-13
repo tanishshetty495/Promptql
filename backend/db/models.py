@@ -60,3 +60,22 @@ class QueryHistory(Base):
     error_message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     user_feedback = Column(Integer, nullable=True)  # 1-5 rating or None
+
+
+class GoldenQueries(Base):
+    """Store successful question-SQL pairs as few-shot examples for improved generation."""
+    __tablename__ = "golden_queries"
+
+    id = Column(Integer, primary_key=True, index=True)
+    connection_id = Column(String(36), index=True, nullable=False)
+    question = Column(Text, nullable=False)
+    sql = Column(Text, nullable=False)
+    embedding = Column(Vector(384), nullable=False)  # all-MiniLM-L6-v2 produces 384-dim vectors
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Create index for vector similarity search
+    __table_args__ = (
+        # Index for fast vector similarity search
+        # Note: Actual index creation would be done via raw SQL or migration
+        {},
+    )

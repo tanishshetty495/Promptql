@@ -242,6 +242,12 @@
                         </div>
                         <div class="card-body">
                             <div id="results-container">
+                                <!-- Explanation Display -->
+                                <div id="explanation-display" class="mb-4">
+                                    <h6><i class="fas fa-lightbulb me-2"></i>Here's how I interpreted your question:</h6>
+                                    <div id="explanation-text" class="p-3 bg-light rounded" readonly></div>
+                                </div>
+
                                 <!-- SQL Display -->
                                 <div class="mb-4">
                                     <h6><i class="fas fa-code me-2"></i>Generated SQL:</h6>
@@ -263,9 +269,9 @@
                                       <div id="table-results">
                                         <!-- Table will be shown here -->
                                       </div>
-                                    </li>
+                                    </div>
                                     <div class="tab-pane fade" id="chart-pane" role="tabpanel" aria-labelledby="chart-tab" tabindex="0">
-                                      <div id="chart-container">
+                                      <div id="chart-container" style="height: 400px; width: 100%;">
                                         <canvas id="results-chart"></canvas>
                                       </div>
                                     </div>
@@ -347,7 +353,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     <script>
         // Frontend JavaScript for PromptQL
         class PromptQLFrontend {
@@ -374,7 +382,11 @@
                 this.sql = '';
                 this.results = [];
                 this.metadata = {};
+                this.chart_spec = null;
+                this.summary = null;
+                this.explanation = null;
                 this.chart = null;
+                this.needsChartRender = false;
 
                 // Initialize the application
                 this.init();
@@ -470,7 +482,11 @@
                     chartTab.addEventListener('shown.bs.tab', () => {
                         // Re-render chart if we have data
                         if (this.results.length > 0) {
-                            this.displayChart();
+                            this.renderChart(); // FIXED from this.displayChart()
+                            // Force resize to ensure proper sizing after tab is shown
+                            if (this.chart) {
+                                this.chart.resize();
+                            }
                         }
                     });
                 }
@@ -691,6 +707,9 @@
                 // Show loading state
                 this.showLoading(true);
 
+                // Clear previous explanation
+                this.explanation = null;
+
                 // Execute query via backend
                 this.api.post('/query', {
                     connection_id: this.currentConnectionId,
@@ -701,9 +720,13 @@
                     this.sql = response.data.sql;
                     this.results = response.data.results;
                     this.metadata = response.data.metadata;
+                    this.chart_spec = response.data.chart_spec;
+                    this.summary = response.data.summary;
+                    this.explanation = response.data.explanation;
 
                     // Update UI
                     this.displaySql();
+                    this.displayExplanation();
                     this.displayResults();
                     this.displayMetadata();
 
@@ -740,7 +763,38 @@
                 }
             }
 
+            displayExplanation() {
+                const explanationText = document.getElementById('explanation-text');
+                if (explanationText) {
+                    explanationText.textContent = this.explanation || 'No explanation available.';
+                }
+                // Show or hide the explanation container based on whether we have an explanation
+                const explanationDisplay = document.getElementById('explanation-display');
+                if (explanationDisplay) {
+                    if (this.explanation && this.explanation.trim() !== '') {
+                        explanationDisplay.style.display = 'block';
+                    } else {
+                        explanationDisplay.style.display = 'none';
+                    }
+                }
+            }
+
             displayResults() {
+                // Display summary if present
+                const resultsDisplay = document.getElementById('results-display');
+                // Remove any existing summary
+                let existingSummary = resultsDisplay.querySelector('#query-summary');
+                if (existingSummary) {
+                    existingSummary.remove();
+                }
+                if (this.summary) {
+                    const summaryDiv = document.createElement('div');
+                    summaryDiv.id = 'query-summary';
+                    summaryDiv.className = 'mb-3 p-3 bg-light rounded';
+                    summaryDiv.innerHTML = `<h6><i class="fas fa-lightbulb me-2"></i>Summary:</h6><p class="mb-0">${this.summary}</p>`;
+                    resultsDisplay.prepend(summaryDiv);
+                }
+
                 const tableResults = document.getElementById('table-results');
                 if (!tableResults) return;
 
@@ -793,50 +847,80 @@
                 tableResults.appendChild(table);
 
                 // Also render chart if data is suitable
-                this.displayChart();
+                this.renderChart();
             }
 
-            displayChart() {
-                console.log('[displayChart] Started. Results length:', this.results.length);
-                const ctx = document.getElementById('results-chart');
-                console.log('[displayChart] Canvas element:', ctx);
-                if (!ctx) {
-                    console.error('[displayChart] Canvas not found!');
-                    return;
+            renderChartJSChart() {
+                console.log('[renderChartJSChart] Started. Results length:', this.results.length);
+                const container = document.getElementById('chart-container');
+                
+                // FIXED: Clear out any previous Vega-Lite charts
+                container.innerHTML = '';
+                this.chart = null;
+
+                // Ensure there is a canvas
+                let canvas = document.getElementById('results-chart');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.id = 'results-chart';
+                    canvas.style.width = '100%';
+                    canvas.style.height = '400px';
+                    container.appendChild(canvas);
+                }
+                const ctx = canvas;
+
+                // Ensure message element exists
+                let messageEl = container.querySelector('#chart-message');
+                if (!messageEl) {
+                    messageEl = document.createElement('div');
+                    messageEl.id = 'chart-message';
+                    messageEl.className = 'text-center text-muted p-3';
+                    messageEl.style.display = 'none';
+                    container.appendChild(messageEl);
                 }
 
                 // Clear previous chart
                 if (this.chart) {
-                    console.log('[displayChart] Destroying previous chart');
+                    console.log('[renderChartJSChart] Destroying previous chart');
                     this.chart.destroy();
                 }
 
                 if (this.results.length === 0) {
-                    console.log('[displayChart] No data to chart');
-                    ctx.innerHTML = '<p class="text-center text-muted">No data to chart</p>';
+                    console.log('[renderChartJSChart] No data to chart');
+                    ctx.style.display = 'none';
+                    messageEl.style.display = 'block';
+                    messageEl.textContent = 'No data to chart';
                     return;
                 }
 
                 // Determine chart type based on data
                 const chartType = this.determineChartType(this.results);
-                console.log('[displayChart] Determined chart type:', chartType);
+                console.log('[renderChartJSChart] Determined chart type:', chartType);
                 if (!chartType) {
-                    console.log('[displayChart] Could not determine chart type');
-                    ctx.innerHTML = '<p class="text-center text-muted">Cannot determine chart type for this data</p>';
+                    console.log('[renderChartJSChart] Could not determine chart type');
+                    ctx.style.display = 'none';
+                    messageEl.style.display = 'block';
+                    messageEl.textContent = 'Cannot determine chart type for this data';
                     return;
                 }
 
                 // Prepare data for chart
                 const chartData = this.prepareChartData(this.results, chartType);
-                console.log('[displayChart] Prepared chart data:', chartData);
+                console.log('[renderChartJSChart] Prepared chart data:', chartData);
                 if (!chartData) {
-                    console.log('[displayChart] Unable to prepare chart data');
-                    ctx.innerHTML = '<p class="text-center text-muted">Unable to prepare chart data</p>';
+                    console.log('[renderChartJSChart] Unable to prepare chart data');
+                    ctx.style.display = 'none';
+                    messageEl.style.display = 'block';
+                    messageEl.textContent = 'Unable to prepare chart data';
                     return;
                 }
 
+                // Hide message, show canvas
+                messageEl.style.display = 'none';
+                ctx.style.display = 'block';
+
                 // Create chart
-                console.log('[displayChart] Creating chart with type:', chartType);
+                console.log('[renderChartJSChart] Creating chart with type:', chartType);
                 this.chart = new Chart(ctx, {
                     type: chartType,
                     data: chartData,
@@ -860,7 +944,49 @@
                         }
                     }
                 });
-                console.log('[displayChart] Chart created:', this.chart);
+                // Force resize to ensure proper sizing (especially important when container was hidden)
+                this.chart.resize();
+                console.log('[renderChartJSChart] Chart created:', this.chart);
+            }
+
+            renderChart() {
+                if (this.chart_spec) {
+                    this.renderVegaLiteChart();
+                } else {
+                    this.renderChartJSChart();
+                }
+            }
+
+            renderVegaLiteChart() {
+                console.log('[renderVegaLiteChart] Started');
+                const container = document.getElementById('chart-container');
+                // Clear the container
+                container.innerHTML = '';
+
+                // Embed the Vega-Lite spec, replacing the data placeholder with the actual results
+                try {
+                    const spec = JSON.parse(JSON.stringify(this.chart_spec)); // deep copy to avoid modifying the original
+                    spec.data = { values: this.results };
+
+                    // FIXED: Add responsive width and fixed height for Vega-Lite
+                    spec.width = "container";
+                    spec.height = 350;
+
+                    vegaEmbed(container, spec)
+                        .then(result => {
+                            // Successfully rendered
+                            console.log('[renderVegaLiteChart] Vega-Lite chart rendered successfully');
+                        })
+                        .catch(error => {
+                            console.error('[renderVegaLiteChart] Error rendering Vega-Lite chart:', error);
+                            // Fall back to Chart.js
+                            this.renderChartJSChart();
+                        });
+                } catch (error) {
+                    console.error('[renderVegaLiteChart] Error parsing chart spec:', error);
+                    // Fall back to Chart.js
+                    this.renderChartJSChart();
+                }
             }
 
             determineChartType(results) {

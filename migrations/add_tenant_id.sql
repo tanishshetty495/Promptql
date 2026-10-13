@@ -1,4 +1,4 @@
--- Add tenant_id column to connection_metadata table
+e-- Add tenant_id column to connection_metadata table
 ALTER TABLE connection_metadata
 ADD COLUMN IF NOT EXISTS tenant_id VARCHAR(36) NOT NULL DEFAULT '00000000-0000-0000-0000-000000000001';
 
