@@ -6,15 +6,82 @@
     <title>PromptQL - Schema-Aware Text-to-SQL Engine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --card-header-bg: linear-gradient(to right, #f8f9fa, #e9ecef);
+            --border-color: #dee2e6;
+            --shadow-color: rgba(0,0,0,0.1);
+            --primary-gradient: linear-gradient(to right, #667eea, #764ba2);
+            --primary-gradient-hover: linear-gradient(to right, #5a67d8, #6b46c1);
+            --loading-pulse: 2s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #212529;
+            --text-color: #f8f9fa;
+            --card-bg: #2c3034;
+            --card-header-bg: linear-gradient(to right, #495057, #6c757d);
+            --border-color: #495057;
+            --shadow-color: rgba(0,0,0,0.3);
+            --primary-gradient: linear-gradient(to right, #667eea, #764ba2);
+            --primary-gradient-hover: linear-gradient(to right, #5a67d8, #6b46c1);
+        }
+
+        .btn-loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: loading-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes loading-pulse {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         body {
-            background-color: #f8f9fa;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
         .container {
             max-width: 1200px;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             color: white;
             padding: 2rem 0;
             margin-bottom: 2rem;
@@ -23,33 +90,34 @@
         .card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px var(--shadow-color);
             margin-bottom: 1.5rem;
             transition: transform 0.2s;
+            background-color: var(--card-bg);
         }
         .card:hover {
             transform: translateY(-5px);
         }
         .card-header {
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            border-bottom: 1px solid #dee2e6;
+            background: var(--card-header-bg);
+            border-bottom: 1px solid var(--border-color);
             border-radius: 15px 15px 0 0 !important;
             font-weight: bold;
         }
         .btn-primary {
-            background: linear-gradient(to right, #667eea, #764ba2);
+            background: var(--primary-gradient);
             border: none;
             padding: 0.75rem 1.5rem;
             font-weight: 500;
         }
         .btn-primary:hover {
-            background: linear-gradient(to right, #5a67d8, #6b46c1);
+            background: var(--primary-gradient-hover);
             transform: translateY(-2px);
         }
         .sql-editor {
             font-family: 'Courier New', monospace;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             padding: 1rem;
             min-height: 100px;
@@ -95,10 +163,11 @@
         }
         .connection-details {
             font-size: 0.9rem;
-            color: #6c757d;
+            color: var(--text-color);
+            opacity: 0.7;
         }
         .tab-content {
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid var(--border-color);
             padding-top: 1rem;
         }
         .nav-tabs .nav-link {
@@ -107,7 +176,7 @@
             font-weight: 500;
         }
         .nav-tabs .nav-link.active {
-            background: linear-gradient(to right, #667eea, #764ba2);
+            background: var(--primary-gradient);
             color: white;
         }
         .query-input {
@@ -121,21 +190,22 @@
             transition: background-color 0.2s;
         }
         .example-query:hover {
-            background-color: #f8f9fa;
+            background-color: var(--bg-color);
         }
         .footer {
             text-align: center;
             padding: 2rem 0;
-            color: #6c757d;
-            border-top: 1px solid #dee2e6;
+            color: var(--text-color);
+            opacity: 0.7;
+            border-top: 1px solid var(--border-color);
             margin-top: 3rem;
         }
         .loading-spinner {
             display: inline-block;
             width: 1rem;
             height: 1rem;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #667eea;
+            border: 2px solid var(--bg-color);
+            border-top: 2px solid var(--primary-gradient);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-left: 0.5rem;
@@ -147,7 +217,8 @@
         .no-results {
             text-align: center;
             padding: 3rem;
-            color: #6c757d;
+            color: var(--text-color);
+            opacity: 0.7;
         }
         .no-results i {
             font-size: 3rem;
@@ -161,14 +232,18 @@
         <!-- Header -->
         <div class="header">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <h1><i class="fas fa-database me-3"></i>PromptQL</h1>
                     <p class="lead mb-0">Schema-Aware Text-to-SQL Engine</p>
                 </div>
-                <div class="col-md-4 text-md-end">
-                    <div id="backend-status" class="status-indicator">
+                <div class="col-md-6 text-md-end">
+                    <div id="backend-status" class="status-indicator me-3">
                         <span class="status-dot status-disconnected"></span>
                         <span id="backend-status-text">Checking backend...</span>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="theme-toggle">
+                        <label class="form-check-label" for="theme-toggle">Dark Mode</label>
                     </div>
                 </div>
             </div>
@@ -181,14 +256,30 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fas fa-plug me-2"></i>Database Connections
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="connections-tab" data-bs-toggle="tab" href="#connections" role="tab" aria-controls="connections" aria-selected="true">Connections</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="history-tab" data-bs-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="card-body">
-                            <button id="add-connection-btn" class="btn btn-primary w-100 mb-3">
-                                <i class="fas fa-plus me-2"></i>Add New Connection
-                            </button>
-                            <div id="connections-list">
-                                <!-- Connections will be populated here -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="connections" role="tabpanel" aria-labelledby="connections-tab">
+                                    <button id="add-connection-btn" class="btn btn-primary w-100 mb-3">
+                                        <i class="fas fa-plus me-2"></i>Add New Connection
+                                    </button>
+                                    <div id="connections-list">
+                                        <!-- Connections will be populated here -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                                    <div id="history-list">
+                                        <!-- Query history will be populated here -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -209,6 +300,9 @@
                                 <div class="d-grid gap-2">
                                     <button type="submit" id="submit-query-btn" class="btn btn-primary btn-lg">
                                         <i class="fas fa-play me-2"></i>Generate & Execute SQL
+                                    </button>
+                                    <button type="button" id="save-query-btn" class="btn btn-outline-success btn-lg">
+                                        <i class="fas fa-star me-2"></i>Save Query
                                     </button>
                                 </div>
                             </form>
@@ -231,13 +325,15 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span><i class="fas fa-chart-bar me-2"></i>Query Results</span>
-                            <div>
-                                <button id="copy-sql-btn" class="btn btn-outline-secondary btn-sm me-2">
-                                    <i class="fas fa-copy"></i> Copy SQL
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary btn-sm dropdown-toggle me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-download"></i> Export
                                 </button>
-                                <button id="download-results-btn" class="btn btn-outline-secondary btn-sm">
-                                    <i class="fas fa-download"></i> Download CSV
-                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><button class="dropdown-item" type="button" id="export-csv"><i class="fas fa-file-csv me-2"></i> CSV</button></li>
+                                    <li><button class="dropdown-item" type="button" id="export-json"><i class="fas fa-file-code me-2"></i> JSON</button></li>
+                                    <li><button class="dropdown-item" type="button" id="export-excel"><i class="fas fa-file-excel me-2"></i> Excel</button></li>
+                                </ul>
                             </div>
                         </div>
                         <div class="card-body">
@@ -245,7 +341,7 @@
                                 <!-- Explanation Display -->
                                 <div id="explanation-display" class="mb-4">
                                     <h6><i class="fas fa-lightbulb me-2"></i>Here's how I interpreted your question:</h6>
-                                    <div id="explanation-text" class="p-3 bg-light rounded" readonly></div>
+                                    <div id="explanation-text" class="p-3 rounded" style="background-color: var(--bg-color);" readonly></div>
                                 </div>
 
                                 <!-- SQL Display -->
@@ -279,7 +375,7 @@
                                 </div>
 
                                 <!-- Metadata -->
-                                <div id="metadata-display" class="mt-4 pt-3 border-top">
+                                <div id="metadata-display" class="mt-4 pt-3" style="border-top: 1px solid var(--border-color);">
                                     <h6><i class="fas fa-info-circle me-2"></i>Query Information:</h6>
                                     <div id="metadata-content"></div>
                                 </div>
@@ -379,6 +475,8 @@
 
                 this.currentConnectionId = null;
                 this.connections = [];
+                this.queryHistory = [];
+                this.savedQueries = [];
                 this.sql = '';
                 this.results = [];
                 this.metadata = {};
@@ -398,6 +496,15 @@
 
                 // Load saved connections (if any)
                 this.loadConnections();
+
+                // Load theme preference
+                this.loadThemePreference();
+
+                // Load query history
+                this.loadQueryHistory();
+
+                // Load saved queries
+                this.loadSavedQueries();
 
                 // Set up event listeners
                 this.setupEventListeners();
@@ -457,10 +564,20 @@
                     copySqlBtn.addEventListener('click', () => this.copySql());
                 }
 
-                // Download results button
-                const downloadResultsBtn = document.getElementById('download-results-btn');
-                if (downloadResultsBtn) {
-                    downloadResultsBtn.addEventListener('click', () => this.downloadResults());
+                // Export results buttons
+                const exportCsvBtn = document.getElementById('export-csv');
+                if (exportCsvBtn) {
+                    exportCsvBtn.addEventListener('click', () => this.exportCSV());
+                }
+
+                const exportJsonBtn = document.getElementById('export-json');
+                if (exportJsonBtn) {
+                    exportJsonBtn.addEventListener('click', () => this.exportJSON());
+                }
+
+                const exportExcelBtn = document.getElementById('export-excel');
+                if (exportExcelBtn) {
+                    exportExcelBtn.addEventListener('click', () => this.exportExcel());
                 }
 
                 // Add connection button
@@ -476,6 +593,12 @@
                     });
                 }
 
+                // Save query button
+                const saveQueryBtn = document.getElementById('save-query-btn');
+                if (saveQueryBtn) {
+                    saveQueryBtn.addEventListener('click', () => this.saveQuery());
+                }
+
                 // Chart tab listener
                 const chartTab = document.getElementById('chart-tab');
                 if (chartTab) {
@@ -488,6 +611,20 @@
                                 this.chart.resize();
                             }
                         }
+                    });
+                }
+
+                // Theme toggle
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    themeToggle.addEventListener('change', () => this.toggleTheme());
+                }
+
+                // History tab listener
+                const historyTab = document.getElementById('history-tab');
+                if (historyTab) {
+                    historyTab.addEventListener('shown.bs.tab', () => {
+                        this.renderQueryHistory();
                     });
                 }
             }
@@ -529,6 +666,112 @@
 
             saveConnections() {
                 localStorage.setItem('promptqlConnections', JSON.stringify(this.connections));
+            }
+
+            loadQueryHistory() {
+                // In a real app, you might load from localStorage or backend
+                // For demo, we'll start with empty history
+                this.queryHistory = JSON.parse(localStorage.getItem('promptqlQueryHistory') || '[]');
+                this.renderQueryHistory();
+            }
+
+            saveQueryHistory() {
+                localStorage.setItem('promptqlQueryHistory', JSON.stringify(this.queryHistory));
+            }
+
+            addToQueryHistory(question, sql, results, metadata, summary, explanation) {
+                const historyItem = {
+                    id: Date.now() + Math.random(), // Simple unique ID
+                    timestamp: new Date().toISOString(),
+                    question: question,
+                    sql: sql,
+                    results: results,
+                    metadata: metadata,
+                    summary: summary,
+                    explanation: explanation,
+                    connectionId: this.currentConnectionId
+                };
+
+                // Add to beginning of array (most recent first)
+                this.queryHistory.unshift(historyItem);
+
+                // Limit to 50 items to prevent storage issues
+                if (this.queryHistory.length > 50) {
+                    this.queryHistory = this.queryHistory.slice(0, 50);
+                }
+
+                this.saveQueryHistory();
+                this.renderQueryHistory();
+            }
+
+            renderQueryHistory() {
+                const historyList = document.getElementById('history-list');
+                if (!historyList) return;
+
+                if (this.queryHistory.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="text-center py-4">
+                            <i class="fas fa-history fa-2x mb-3 text-muted"></i>
+                            <p class="mb-0">No query history yet. Execute queries to see them here.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                historyList.innerHTML = '';
+                this.queryHistory.forEach(item => {
+                    const historyDiv = document.createElement('div');
+                    historyDiv.className = 'history-item p-3 border rounded mb-2';
+                    historyDiv.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">${item.question}</h6>
+                                <div class="text-small text-muted">
+                                    <small>${new Date(item.timestamp).toLocaleString()}</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="frontend.reexecuteQuery('${item.id}')">
+                                    <i class="fas fa-redo"></i> Re-run
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="frontend.removeQueryHistoryItem('${item.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    historyList.appendChild(historyDiv);
+                });
+            }
+
+            reexecuteQuery(queryId) {
+                const historyItem = this.queryHistory.find(item => item.id === queryId);
+                if (historyItem) {
+                    // Set the question in the input
+                    document.getElementById('question-input').value = historyItem.question;
+
+                    // If we have a connection ID and it's different from current, try to select it
+                    if (historyItem.connectionId && historyItem.connectionId !== this.currentConnectionId) {
+                        this.selectConnection(historyItem.connectionId);
+                    }
+
+                    // Focus on the textarea
+                    document.getElementById('question-input').focus();
+
+                    this.showToast('Query loaded. Click "Generate & Execute SQL" to run it again.', 'info');
+                }
+            }
+
+            removeQueryHistoryItem(queryId) {
+                if (!confirm('Are you sure you want to remove this query from history?')) {
+                    return;
+                }
+
+                this.queryHistory = this.queryHistory.filter(item => item.id !== queryId);
+                this.saveQueryHistory();
+                this.renderQueryHistory();
+
+                this.showToast('Query removed from history', 'info');
             }
 
             addConnection() {
@@ -691,6 +934,58 @@
                 this.showToast('Connection removed', 'info');
             }
 
+            // Saved queries functions
+            loadSavedQueries() {
+                // In a real app, you might load from localStorage or backend
+                // For demo, we'll start with empty saved queries
+                this.savedQueries = JSON.parse(localStorage.getItem('promptqlSavedQueries') || '[]');
+            }
+
+            saveSavedQueries() {
+                localStorage.setItem('promptqlSavedQueries', JSON.stringify(this.savedQueries));
+            }
+
+            saveQuery() {
+                const question = document.getElementById('question-input').value.trim();
+
+                if (!question) {
+                    this.showToast('Please enter a question to save', 'warning');
+                    return;
+                }
+
+                if (!this.currentConnectionId) {
+                    this.showToast('Please select a database connection first', 'warning');
+                    return;
+                }
+
+                // Prompt for a name for the saved query
+                const queryName = prompt('Enter a name for this query:', '');
+                if (queryName === null) {
+                    // User cancelled
+                    return;
+                }
+
+                if (queryName.trim() === '') {
+                    this.showToast('Please enter a valid name for the query', 'warning');
+                    return;
+                }
+
+                // Create saved query item
+                const savedQuery = {
+                    id: Date.now() + Math.random(), // Simple unique ID
+                    name: queryName.trim(),
+                    question: question,
+                    connectionId: this.currentConnectionId,
+                    createdAt: new Date().toISOString()
+                };
+
+                // Add to saved queries array
+                this.savedQueries.push(savedQuery);
+                this.saveSavedQueries();
+
+                this.showToast(`Query saved as "${queryName}"`, 'success');
+            }
+
             executeQuery() {
                 const question = document.getElementById('question-input').value.trim();
 
@@ -724,15 +1019,44 @@
                     this.summary = response.data.summary;
                     this.explanation = response.data.explanation;
 
+                    // Add to query history
+                    this.addToQueryHistory(question, this.sql, this.results, this.metadata, this.summary, this.explanation);
+
                     // Update UI
                     this.displaySql();
                     this.displayExplanation();
                     this.displayResults();
                     this.displayMetadata();
 
-                    // Show success message
+                    // Show success message with celebrations
                     const rowCount = response.data.row_count || this.results.length;
-                    this.showToast(`Query executed successfully! ${rowCount} rows returned.`, 'success');
+                    const executionTime = response.data.metadata?.execution_time_ms || 0;
+
+                    // Success celebrations - confetti for successful queries
+                    if (rowCount > 0) {
+                        confetti({
+                            particleCount: 100,
+                            spread: 70,
+                            origin: { y: 0.6 },
+                            colors: ['#ff9e00', '#3742fa', '#2ed573', '#ff6b6b']
+                        });
+                    }
+
+                    // Query time celebrations - fun facts based on execution time
+                    let celebrationMessage = `Query executed successfully! ${rowCount} rows returned.`;
+                    if (executionTime < 100) {
+                        celebrationMessage += " ⚡ Lightning fast!";
+                    } else if (executionTime < 500) {
+                        celebrationMessage += " 🚀 Speedy!";
+                    } else if (executionTime < 1000) {
+                        celebrationMessage += " 💨 Quick!";
+                    } else if (executionTime < 3000) {
+                        celebrationMessage += " 🐌 Taking its time...";
+                    } else {
+                        celebrationMessage += " ☕ Time for a coffee break!";
+                    }
+
+                    this.showToast(celebrationMessage, 'success');
                 })
                 .catch(error => {
                     let errorMessage = 'An error occurred while processing your query';
@@ -773,6 +1097,8 @@
                 if (explanationDisplay) {
                     if (this.explanation && this.explanation.trim() !== '') {
                         explanationDisplay.style.display = 'block';
+                        // Add a subtle animation to draw attention to the explanation
+                        explanationDisplay.style.animation = 'fadeIn 0.5s ease-in-out';
                     } else {
                         explanationDisplay.style.display = 'none';
                     }
@@ -1270,9 +1596,9 @@
                 });
             }
 
-            downloadResults() {
+            exportCSV() {
                 if (this.results.length === 0) {
-                    this.showToast('No results to download', 'warning');
+                    this.showToast('No results to export', 'warning');
                     return;
                 }
 
@@ -1309,18 +1635,96 @@
                 document.body.removeChild(link);
             }
 
+            exportJSON() {
+                if (this.results.length === 0) {
+                    this.showToast('No results to export', 'warning');
+                    return;
+                }
+
+                // Convert results to JSON
+                const jsonContent = JSON.stringify(this.results, null, 2);
+                const blob = new Blob([jsonContent], { type: 'application/json;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+
+                // Create download link
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', `query_results_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.json`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            exportExcel() {
+                if (this.results.length === 0) {
+                    this.showToast('No results to export', 'warning');
+                    return;
+                }
+
+                // For Excel export, we'll create a CSV but with .xls extension
+                // This is a simple approach that works in most spreadsheet applications
+                // For a more sophisticated Excel export, you would need a library like SheetJS
+                const headers = Object.keys(this.results[0]);
+                const csvRows = [];
+
+                // Add header row
+                csvRows.push(headers.join(','));
+
+                // Add data rows
+                this.results.forEach(row => {
+                    const values = headers.map(header => {
+                        const value = row[header];
+                        // Escape quotes and wrap in quotes if needed
+                        const stringValue = value === null || value === undefined ? '' : String(value);
+                        const escaped = stringValue.includes('"') ? stringValue.replace(/"/g, '""') : stringValue;
+                        return `"${escaped}"`;
+                    });
+                    csvRows.push(values.join(','));
+                });
+
+                const csvContent = csvRows.join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+
+                // Create download link
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', `query_results_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.xls`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
             showLoading(isLoading) {
                 const submitBtn = document.getElementById('submit-query-btn');
                 const questionInput = document.getElementById('question-input');
 
                 if (isLoading) {
-                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+                    submitBtn.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <div class="spinner-border text-primary me-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div>
+                                Processing your query...
+                                <div class="fs-6">Generating SQL query</div>
+                                <div class="fs-6">Validating SQL syntax</div>
+                                <div class="fs-6">Executing query against database</div>
+                            </div>
+                        </div>
+                    `;
                     submitBtn.disabled = true;
                     questionInput.disabled = true;
+                    // Add a pulsing effect to the button
+                    submitBtn.classList.add('btn-loading');
                 } else {
                     submitBtn.innerHTML = '<i class="fas fa-play me-2"></i>Generate & Execute SQL';
                     submitBtn.disabled = false;
                     questionInput.disabled = false;
+                    // Remove pulsing effect
+                    submitBtn.classList.remove('btn-loading');
                 }
             }
 
@@ -1364,6 +1768,29 @@
                 toastEl.addEventListener('hidden.bs.toast', () => {
                     toastEl.remove();
                 });
+            }
+
+            // Theme management
+            loadThemePreference() {
+                const darkMode = localStorage.getItem('promptqlDarkMode') === 'true';
+                if (darkMode) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.getElementById('theme-toggle').checked = true;
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.getElementById('theme-toggle').checked = false;
+                }
+            }
+
+            toggleTheme() {
+                const isDarkMode = document.getElementById('theme-toggle').checked;
+                if (isDarkMode) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('promptqlDarkMode', 'true');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('promptqlDarkMode', 'false');
+                }
             }
         }
 

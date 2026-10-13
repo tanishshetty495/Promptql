@@ -9,6 +9,23 @@ A web application that lets users connect their cloud-hosted PostgreSQL database
 - Query execution with result formatting
 - Plain English explanations of generated SQL
 - Modular backend architecture for extensibility
+- Enhanced frontend with:
+  - Query history sidebar for revisiting and re-running previous queries
+  - Saved queries feature for naming and saving frequently used queries
+  - Dark/light theme toggle with user preference persistence
+  - Multiple export formats (CSV, JSON, Excel)
+  - Enhanced loading states with engaging animations
+  - Success celebrations with confetti animations
+  - Query time celebrations with fun facts based on execution speed
+  - Improved query explanation formatting
+  - Interactive connection status indicators
+  - Project demonstration GIF (see below) showing the application in action
+
+## Demo
+
+![PromptQL Demo](assets/demo.gif)
+
+*Note: The demo GIF shows the application in action with natural language querying, query history, theme toggle, and export functionality.*
 
 ## Backend Implementation
 
@@ -50,6 +67,14 @@ This repository contains the backend implementation for PromptQL. See `backend/P
    ```bash
    uvicorn backend.app.main:app --reload
    ```
+
+### Usage Tips
+
+- Use the **Save Query** feature (star icon) to save frequently used queries with custom names
+- Access your saved queries from the connection panel
+- Use the query history panel to revisit and re-run previous queries
+- Toggle between light and dark themes using the theme switch in the header
+- Export results in CSV, JSON, or Excel formats using the export dropdown
 
 ## Environment Configuration
 
